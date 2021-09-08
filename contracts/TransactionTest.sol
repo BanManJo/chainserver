@@ -6,7 +6,7 @@ contract TransactionTest {
     address sender;
 
     // function : persona -> contract Transaction!
-    function sendToContract(uint256 id) public payable {
+    function sendToContract() public payable {
         //
         sender = msg.sender;
     }
