@@ -1,12 +1,9 @@
-const Demo2 = artifacts.require("Demo");
+const Demo = artifacts.require("Demo");
+const OrderRoom = artifacts.require("OrderRoom");
+const ChickenHouse = artifacts.require("ChickenHouse");
 
 module.exports = function(deployer){
-    deployer.deploy(Demo2);
+    deployer.deploy(Demo);
+    deployer.deploy(OrderRoom);
+    deployer.deploy(ChickenHouse);
 };
-
-const OrderRoom2 = artifacts.require("OrderRoom");
-
-module.exports = function(deployer){
-    deployer.deploy(OrderRoom2);
-};
-
