@@ -1,6 +1,7 @@
 pragma solidity ^0.5.2;
 
 contract Menu {
+  
   struct Menu {
     uint256 price;
     string chickenName;
@@ -8,14 +9,14 @@ contract Menu {
   Menu[] public meuns;
 
   function setMenu(
-    Store memory store,
+    // Store memory store,
     uint256 _price,
     string memory _chickenName
   ) public returns (bool) {
     Menu memory menu;
     menu.price = _price;
     menu.chickenName = _chickenName;
-    store.meuns.push(menu);
+    // store.meuns.push(menu);
     return true;
   }
 

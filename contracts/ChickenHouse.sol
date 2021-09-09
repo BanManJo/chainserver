@@ -1,5 +1,5 @@
 pragma solidity ^0.5.2;
-import "./Menu.sol";
+// import "./Menu.sol";
 
 // solidity version
 contract ChickenHouse {
@@ -11,7 +11,7 @@ contract ChickenHouse {
     string storeName;
     address ceoAccount;
     string location;
-    Menu[] menus;
+    // Menu[] menus;
     uint256 countRoom;
     uint256 cookingTime;
     uint8 finishType;
@@ -49,7 +49,7 @@ contract ChickenHouse {
     newStore.storeName = _storeName;
     newStore.ceoAccount = _ceoAccount;
     newStore.location = _location;
-    newStore.menu = _menu;
+    // newStore.menu = _menu;
     newStore.countRoom = _countRoom;
     newStore.cookingTime = _cookingTime;
     newStore.finishType = _finishType;
@@ -66,7 +66,7 @@ contract ChickenHouse {
       string memory storeName,
       address ceoAccount,
       string memory location,
-      string memory menu,
+      // string memory menu,
       uint256 countRoom,
       uint256 cookingTime,
       uint8 finishType
@@ -77,7 +77,7 @@ contract ChickenHouse {
       store.storeName,
       store.ceoAccount,
       store.location,
-      store.menu,
+      // store.menu,
       store.countRoom,
       store.cookingTime,
       store.finishType
