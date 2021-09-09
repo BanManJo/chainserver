@@ -1,4 +1,4 @@
-pragma solidity ^0.5.2;
+pragma solidity >=0.5.2;
 
 contract OrderRoom {
   struct Menu {
@@ -30,19 +30,19 @@ contract OrderRoom {
     uint256 _startTime,
     uint256 _finishTime,
     uint8 _state
-  ) public returns (bool) {
+  ) payable public returns (bool) {
     OrderRoom memory newRoom;
-    newRoom.roomNumber = _roomNumber;
+    newRoom.roomNumber = 0;
     newRoom.storeName = "BBQ"; // 하드 코딩 값!
-    newRoom.user1 = _user1;
+    newRoom.user1 = msg.sender;
     newRoom.user2 = _user2;
     Menu memory menu;
-    menu.chickenName = _chickenName;
-    menu.price = _price;
+    menu.chickenName = "original";
+    menu.price = 18000;
     newRoom.menu = menu;
-    newRoom.startTime = _startTime;
-    newRoom.finishTime = _finishTime;
-    newRoom.state = _state;
+    newRoom.startTime = block.timestamp; //now 써도되는지 확인해야함 
+    newRoom.finishTime = block.timestamp + 10 ;
+    newRoom.state = 1;
 
     orderRooms.push(newRoom);
 
