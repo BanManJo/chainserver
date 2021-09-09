@@ -99,7 +99,16 @@ contract OrderRoom {
     // pending(orderRooms[_roomId].startTime, orderRooms[_roomId].state, orderRooms[_roomId].user);
 
 
+}
+  function ownerFetch(uint _roomId, uint256 state ) payable public {
+    // owner 주소 
+                              // require를 사용해서 rooId Store 주인이 owner인지 확인해야한다.
+                              //컨트랙트에서 owner 계좌로 송금을 한다.
+                              // state 3 으로 변경 .
+    msg.sender.transfer(address(this).balance);
 
     
-  }
+
+}
+    
 }
