@@ -22,28 +22,22 @@ contract OrderRoom {
   OrderRoom[] private orderRooms;
 
   function createRoom(
-    uint256 _roomNumber,
     string memory _storeName,
-    address _user1,
-    address _user2,
     //     Menu memory _menu,
     string memory _chickenName,
     uint16 _price,
-    uint256 _startTime,
-    uint256 _finishTime,
-    uint8 _state
+    uint256 _finishTime
   ) payable public returns (bool) {
     OrderRoom memory newRoom;
-    newRoom.roomNumber = 0;
-    newRoom.storeName = "BBQ"; // 하드 코딩 값!
+    newRoom.roomNumber = orderRooms.length -1;
+    newRoom.storeName = _storeName;
     newRoom.user1 = msg.sender;
-    newRoom.user2 = _user2;
     Menu memory menu;
-    menu.chickenName = "original";
-    menu.price = 18000;
+    menu.chickenName = _chickenName;
+    menu.price = _price;
     newRoom.menu = menu;
     newRoom.startTime = block.timestamp; //now 써도되는지 확인해야함 
-    newRoom.finishTime = block.timestamp + 10 ;
+    newRoom.finishTime = block.timestamp + _finishTime ;
     newRoom.state = 1;
 
     orderRooms.push(newRoom);
