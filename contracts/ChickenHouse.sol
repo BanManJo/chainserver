@@ -1,5 +1,4 @@
 pragma solidity ^0.5.2;
-import "./Menu.sol";
 
 // solidity version
 contract ChickenHouse {
@@ -7,54 +6,60 @@ contract ChickenHouse {
     uint256 price;
     string chickenName;
   }
+  struct Location {
+    string latitude;
+    string longitude;
+  }
   struct Store {
     string storeName;
     address ceoAccount;
-    string location;
-    Menu[] menus;
+    Location location;
+    mapping(uint256 => Menu) menus;
+    uint256 menuSize;
     uint256 countRoom;
     uint256 cookingTime;
     uint8 finishType;
   }
+  mapping(address => uint256) private ownerToIndex;
+  Store[] private stores;
 
-  Store[] public stores;
+  function setMenu(string memory _chickenName, uint256 _price) public {
+    //   Store store = // 어떤 스토어?
+    uint256 idx = ownerToIndex[msg.sender];
+    Store storage store = stores[idx];
+    // Store storage store = stores[idx];
+    Menu memory menu = Menu(_price, _chickenName);
+    store.menus[store.menuSize] = menu;
+  }
 
-  //   function _setMenu(
-  //     Store memory store,
-  //     uint256 _price,
-  //     string memory _chickenName
-  //   ) public returns (bool) {
-  //     Menu memory menu;
-  //     menu.price = _price;
-  //     menu.chickenName = _chickenName;
-  //     store.meuns.push(menu);
-  //     return true;
-  //   }
-
-  //   function setMenu(chicke, price) {
-  //     //   Store store = // 어떤 스토어?
-  //     _setMenu(store, chicke, price);
-  //   }
+  function getMenuById(uint256 _id)
+    public
+    view
+    returns (string memory chickenName, uint256 price)
+  {
+    Menu memory menu = stores[ownerToIndex[msg.sender]].menus[_id];
+    return (menu.chickenName, menu.price);
+  }
 
   function StoreRegistration(
     string memory _storeName,
-    address _ceoAccount,
-    string memory _location,
-    string memory _menu,
+    string memory _latitude,
+    string memory _longitude,
     uint256 _countRoom,
     uint256 _cookingTime,
     uint8 _finishType
   ) public returns (bool) {
     Store memory newStore;
     newStore.storeName = _storeName;
-    newStore.ceoAccount = _ceoAccount;
-    newStore.location = _location;
-    newStore.menu = _menu;
+    newStore.ceoAccount = msg.sender;
+    newStore.location = Location(_latitude, _longitude);
+    //newStore.menus = Menu[]; // null
     newStore.countRoom = _countRoom;
     newStore.cookingTime = _cookingTime;
     newStore.finishType = _finishType;
-
+    newStore.menuSize = 0;
     stores.push(newStore);
+    ownerToIndex[msg.sender] = stores.length - 1;
 
     return true;
   }
@@ -65,8 +70,8 @@ contract ChickenHouse {
     returns (
       string memory storeName,
       address ceoAccount,
-      string memory location,
-      string memory menu,
+      string memory latitude,
+      string memory longitude,
       uint256 countRoom,
       uint256 cookingTime,
       uint8 finishType
@@ -76,8 +81,8 @@ contract ChickenHouse {
     return (
       store.storeName,
       store.ceoAccount,
-      store.location,
-      store.menu,
+      store.location.latitude,
+      store.location.longitude,
       store.countRoom,
       store.cookingTime,
       store.finishType
