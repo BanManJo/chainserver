@@ -6,4 +6,6 @@ contract A {
   function getNum() external view returns (uint256) {
     return num;
   }
+
+  function() external payable {}
 }

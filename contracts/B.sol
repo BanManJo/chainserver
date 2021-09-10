@@ -25,7 +25,7 @@ contract B {
     return address(this).balance;
   }
 
-  function transferTo(address payable targetAddr) public payable {
+  function transferTo(address payable targetAddr) public {
     targetAddr.transfer(10);
   }
 }
