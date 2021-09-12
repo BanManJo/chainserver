@@ -10,7 +10,7 @@ module.exports = function (deployer) {
   // deployer.deploy(TransactionTest);
   // deployer.deploy(A);
   // deployer.deploy(B);
-  deployer.deploy(AdminTest);
-  deployer.deploy(ChickenHouseTest);
-  deployer.deploy(OrderRoomTest);
+  // deployer.deploy(AdminTest);
+  // deployer.deploy(ChickenHouseTest);
+  // deployer.deploy(OrderRoomTest);
 };

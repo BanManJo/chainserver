@@ -25,6 +25,8 @@ contract Demo {
     newRoom.name = _name;
     newRoom.menu = _menu;
     rooms.push(newRoom);
+
+    emit RoomCreated(msg.sender, _roomNumber);
     return true;
   }
 
@@ -45,4 +47,6 @@ contract Demo {
   function testing() public returns (string memory) {
     return "hello world";
   }
+
+  event RoomCreated(address _owner, uint _roomNumber);
 }
