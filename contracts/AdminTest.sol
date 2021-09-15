@@ -20,12 +20,23 @@ contract AdminTest {
     chickenHouse.createRoom();
   }
 
-  function getBalanceOfRomm(uint256 storeName, uint256 roomNumber)
+  //가게 주인이 돈받는 함수
+  function approveOrder(uint256 _storeIndex , uint256 _roomNumber) public {
+    //여기는 해당되는 방을 찾기위해 _storeName으로 치킨집을 찾고 _roomNumber로 해당되는 방을 찾는다 
+    ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
+    chickenHouse.approveOrder(_roomNumber);
+  }
+
+  
+  
+  
+  
+  function getBalanceOfRoom(uint256 _storeIndex, uint256 _roomIndex)
     public
     view
     returns (uint256)
   {
-    ChickenHouseTest chickenHouse = chickenHouses[storeName];
-    return chickenHouse.getBalance(roomNumber);
+    ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
+    return chickenHouse.getBalance(_roomIndex);
   }
 }
