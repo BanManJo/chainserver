@@ -10,8 +10,8 @@ contract AdminTest {
   function() external payable {}
 
   // ChickenHouse 등록
-  function registerChickenHouse() public {
-    ChickenHouseTest chickenHouse = new ChickenHouseTest();
+  function registerChickenHouse(string[]  _chickens, string[] prices ) public {
+    ChickenHouseTest chickenHouse = new ChickenHouseTest(string[] _chickens, string[] prices);
     // 인스턴스를 만들어 준것 ?
     chickenHouses.push(chickenHouse);
   }

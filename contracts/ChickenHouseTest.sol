@@ -19,7 +19,13 @@ contract ChickenHouseTest {
 
 
   OrderRoomTest[] orderRooms;
-
+  Price[] price;
+  ChickenName[] chickenName;
+  //생성자
+  constructor(string[] memory _chickens, uint256[] memory _prices) public {
+        Menu =_chickens;
+        Menu = _prices;    
+      }
   // 주문방 만들기
   function createRoom(uint256 _price, uint256 _finish, string memory _chickenName) public payable {
     // room 생성!!!!
