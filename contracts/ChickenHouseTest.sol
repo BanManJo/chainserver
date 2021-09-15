@@ -28,6 +28,17 @@ contract ChickenHouseTest {
 
   function() external payable {
       
+  function approveOrder(uint256 _roomNumber) public payable {
+    OrderRoomTest orderRoom = orderRooms[_roomNumber]; // 해당 치킨하우스에 해당하는 orderRoom을 찾는다.
+    // require (tx.origin == owner);  
+    orderRoom.approveOrder();
+    
+  }
+
+  function getBalance(uint256 _roomIndex) public view returns (uint256) {
+    OrderRoomTest orderRoom = orderRooms[_roomIndex];
+    return address(orderRoom).balance;
+
   }
 
    function matchRoom(uint256 _roomIndex) public payable {

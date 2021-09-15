@@ -2,6 +2,10 @@ pragma solidity ^0.5.2;
 
 // OrderRoom 역할
 contract OrderRoomTest {
+
+  
+
+
   // uint256 public num = 10;
   uint256 public price;
   string public chickenName;
@@ -10,6 +14,7 @@ contract OrderRoomTest {
   uint256 public finishTime;
   address public user1;
   address public user2;
+
 
 
   function() external payable {
@@ -32,4 +37,16 @@ contract OrderRoomTest {
     return true;
   }
 
+  function approveOrder() external payable{
+    tx.origin.transfer(address(this).balance); 
+    //방에 들어있는 돈들 출금
+    
+    // this.state = 3;
+    // this.user1 = "";
+    // this.user2 = "";
+    // this.stratTime = 0;
+    // this.finishTime = 0;
+
+    //여기서 이제 event 날린다?     
+  } 
 }
