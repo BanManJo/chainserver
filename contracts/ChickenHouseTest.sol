@@ -5,13 +5,30 @@ import "./OrderRoomTest.sol";
 // ChickenHouse 역할
 contract ChickenHouseTest {
   OrderRoomTest[] orderRooms;
+  Menu menu;
+  Location location;
+  string storeName;
+  address owner;
+  uint roomIndex;
+  uint salesOnOff;
+  uint roomIndex; 
+  string latitude;
+  string longitude;
+  
+
+    struct Menu {
+    uint256 price;
+    string chickenName;
+  }
+
+  uint256 public storeIndex = 0;
 
   function() external payable {}
 
   // 주문방 만들기
-  function createRoom() public {
+  function createRoom(uint256 _price, uint8 _finish, string memory _chickenName) public {
     // room 생성!!!!
-    OrderRoomTest orderRoom = new OrderRoomTest();
+    OrderRoomTest orderRoom = new OrderRoomTest(_price, _finish, _chickenName);
     orderRooms.push(orderRoom);
     address(uint160(address(orderRoom))).transfer(10);
   }

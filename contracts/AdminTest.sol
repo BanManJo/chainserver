@@ -9,15 +9,17 @@ contract AdminTest {
   // ChickenHouse 등록
   function registerChickenHouse() public {
     ChickenHouseTest chickenHouse = new ChickenHouseTest();
+    // 인스턴스를 만들어 준것 ?
     chickenHouses.push(chickenHouse);
   }
 
+
   // 방만들기 함수
-  function createRoom(uint256 storeName) public payable {
+  function createRoom(uint256 _storeIndex, uint256 _price, uint8 _finish, string _chickenName) public payable {
     // chickenHouse를 찾자 storeName 으로!
-    ChickenHouseTest chickenHouse = chickenHouses[storeName];
+    ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
     address(uint160(address(chickenHouse))).transfer(msg.value); // msg.value : 사용자가 전달한 이더
-    chickenHouse.createRoom();
+    chickenHouse.createRoom(_price, _finish, _chickenName);
   }
 
   function getBalanceOfRomm(uint256 storeName, uint256 roomNumber)
