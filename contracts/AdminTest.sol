@@ -1,9 +1,10 @@
 pragma solidity ^0.5.2;
 
 import "./ChickenHouseTest.sol";
-
+import "./OrderRoomTest.sol";
 // Admin 역할
 contract AdminTest {
+   
   ChickenHouseTest[] chickenHouses;
 
   // ChickenHouse 등록
@@ -12,6 +13,7 @@ contract AdminTest {
     // 인스턴스를 만들어 준것 ?
     chickenHouses.push(chickenHouse);
   }
+  
 
 
   // 방만들기 함수
@@ -20,14 +22,12 @@ contract AdminTest {
     ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
     address(uint160(address(chickenHouse))).transfer(msg.value); // msg.value : 사용자가 전달한 이더
     chickenHouse.createRoom(_price, _finish, _chickenName);
+  // 방 Match 함수
+  function matchRoom(uint256 _storeIndex, uint256 _roomIndex) public payable {
+    // 바로 할당을 위한 생성
+    ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
+    address(uint160(address(chickenHouse))).transfer(msg.value);
+    chickenHouse.matchRoom(_roomIndex);
   }
 
-  function getBalanceOfRomm(uint256 storeName, uint256 roomNumber)
-    public
-    view
-    returns (uint256)
-  {
-    ChickenHouseTest chickenHouse = chickenHouses[storeName];
-    return chickenHouse.getBalance(roomNumber);
-  }
 }

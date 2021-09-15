@@ -4,9 +4,7 @@ pragma solidity ^0.5.2;
 contract OrderRoomTest {
   // uint256 public num = 10;
   uint256 public price;
-  uint8 public finish;
   string public chickenName;
-
   uint8 public state;
   uint256 public startTime;
   uint256 public finishTime;
@@ -27,9 +25,11 @@ contract OrderRoomTest {
   // constructor(uint256 _num) public {
   //   num = _num;
   // }
-
-  function getNum() external view returns (uint256) {
-    return num;
+  function matchRoom() external returns (bool){
+    state = 2;
+    user2 = tx.origin;
+    
+    return true;
   }
 
 }
