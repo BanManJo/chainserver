@@ -5,11 +5,11 @@ contract("AdminTest", (accounts) => {
     instance = await AdminTest.deployed();
 
     // registerChickenHouse 함수 호출!
-    await instance.registerChickenHouse();
+    await instance.registerChickenHouse("다글다글", ["후라이드","양념"], [3000,4000]);
     console.log("pass1");
 
     // createRoom 함수 호출!
-    await instance.createRoom(0, 8000, 5, "뿌링클", {
+    await instance.createRoom("다글다글", 8000, 5, "뿌링클", {
       from: accounts[1],
       value: 1000000000000000000,
     });

@@ -13,20 +13,23 @@ contract ChickenHouseTest {
   string longitude;
   Menu[] public menus;
   uint256 roomCount = 0;
+
+
   
 
   struct Menu {
     string chickenName;
     uint256 price;
   }
+  
  constructor (string memory _storeName) public {
           storeName = _storeName;
       }
   // 메뉴(치킨, 가격)등록
   function registerChickenHouse(string[] memory _chickenNames, uint256[] memory _prices) public returns(uint256) {
        require(_chickenNames.length == _prices.length);
-        
-        for(uint i= 0;i<_chickenNames.length;i++){
+
+        for(uint i = 0 ; i <_chickenNames.length ; i++){
             menus.push( Menu(_chickenNames[i], _prices[i]) );
         }
         return menus.length;    
@@ -34,11 +37,13 @@ contract ChickenHouseTest {
       
     
   // 주문방 만들기
-  function createRoom(uint256 _price, uint256 _finish, string memory _chickenName) public payable {
+  function createRoom(uint256 _price, uint256 _finish, string memory _chickenName, uint _valueToSend) public payable {
     // room 생성!!!!
     OrderRoomTest orderRoom = new OrderRoomTest(_price, _finish, _chickenName);
     orderRooms.push(orderRoom);
-    address(uint160(address(orderRoom))).transfer(address(this).balance);
+    // OrderRoomTest a = OrderRoomTest(address(uint160(address(orderRoom))));
+    // a.blah.value(_valueToSend)(0,0);
+    address(uint160(address(orderRoom))).transfer(_valueToSend);
     roomCount++;
   }
 
@@ -70,11 +75,9 @@ contract ChickenHouseTest {
 
   }
 
-  // 1. 지도에 모든 치킨집을 나타내기 위해서 모든 치킨집의 정보를 가져올 get 함수가 필요하다?
-  //function getChickenHouse1() public view returns () 
 
   // 2. 원하는 치킨집의 정보를 가져온다?
-  function getChickenHouse1() public view returns (string memory, string memory, string memory, uint8){
+  function getChickenHouse() public view returns (string memory, string memory, string memory, uint8){
     return (storeName, latitude, longitude, onOff); 
   }
 
