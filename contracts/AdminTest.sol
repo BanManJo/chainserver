@@ -1,4 +1,5 @@
 pragma solidity ^0.5.2;
+pragma experimental ABIEncoderV2;
 
 import "./ChickenHouseTest.sol";
 
@@ -20,6 +21,7 @@ contract AdminTest {
   function createRoom(uint256 _storeIndex, uint256 _price, uint256 _finish, string memory _chickenName) public payable {
     // chickenHouse를 찾자 storeName 으로!
     ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
+    uint valueTosend = msg.value;
     address(uint160(address(chickenHouse))).transfer(msg.value); // msg.value : 사용자가 전달한 이더
     chickenHouse.createRoom(_price, _finish, _chickenName);
   }
@@ -56,5 +58,41 @@ contract AdminTest {
     ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
     return chickenHouse.getStateRoom(_roomIndex);
   }
+
+  // function getChickenHouse(string _storeName) public view returns(string[]) {
+  //   // 치킨집 이름에 해당하는 것을 가져와야한다.
+  //   // 지도를 클릭했을때 프론트에서 얻을 수 있는 정보는 치킨집 이름이라고 생각한다.
+  //   for( i = 0 ; i < chickenHouses.length ; i++){
+  //     if(chickenHouses[i].storeName == _storeName){
+  //       ChickenHouseTest chickenHouse = chickenHouses[i];
+  //       return chickenHouse.getChickenHouse();
+  //     }
+  //   } 
+  // }
+
+  // 1. 지도에 모든 치킨집을 나타내기 위해서 모든 치킨집의 정보를 가져올 get 함수가 필요하다?
+    // function getChickenHouse() public view returns(ChickenHouseTest[] memory){
+    //   return chickenHouses;
+    // }
+
+
+  // 2. 원하는 치킨집의 정보를 가져온다?
+    function getChickenHouse1(uint256 _storeIndex) public view returns(string memory, string memory, string memory, uint8){
+      ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
+      return chickenHouse.getChickenHouse1();
+    }
+
+  // 2.5 원하는 치킨집의 메뉴를 가져온다?
+    function getStoreMenu(uint256 _storeIndex) public view returns(string[] memory, uint256[] memory){
+      ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
+      return chickenHouse.getStoreMenu();
+    }
+
+
+  // 3. 원하는 주문방의 정보를 가져온다?
+    function getRoomInfo(uint256 _storeIndex, uint256 _roomIndex) public view returns(string memory, uint256, uint8, address){
+       ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
+      return chickenHouse.getRoomInfo(_roomIndex);
+    }
   
 }
