@@ -1,7 +1,6 @@
 pragma solidity ^0.5.2;
 pragma experimental ABIEncoderV2;
 import "./OrderRoomTest.sol";
-pragma experimental ABIEncoderV2;
 
 // ChickenHouse 역할
 contract ChickenHouseTest {
@@ -12,7 +11,7 @@ contract ChickenHouseTest {
   uint8 onOff;
   string latitude;
   string longitude;
-  Menu[] menus;
+  Menu[] public menus;
   uint256 roomCount = 0;
   
 
@@ -20,7 +19,6 @@ contract ChickenHouseTest {
     string chickenName;
     uint256 price;
   }
-  Menu[] public menus;
  constructor (string memory _storeName) public {
           storeName = _storeName;
       }
