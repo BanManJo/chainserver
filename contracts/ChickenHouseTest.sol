@@ -1,6 +1,7 @@
 pragma solidity ^0.5.2;
 pragma experimental ABIEncoderV2;
 import "./OrderRoomTest.sol";
+pragma experimental ABIEncoderV2;
 
 // ChickenHouse 역할
 contract ChickenHouseTest {
@@ -12,6 +13,7 @@ contract ChickenHouseTest {
   string latitude;
   string longitude;
   Menu[] menus;
+  uint256 roomCount = 0;
   
 
   struct Menu {
@@ -39,9 +41,11 @@ contract ChickenHouseTest {
     OrderRoomTest orderRoom = new OrderRoomTest(_price, _finish, _chickenName);
     orderRooms.push(orderRoom);
     address(uint160(address(orderRoom))).transfer(address(this).balance);
+    roomCount++;
   }
 
   function() external payable {}
+  
       
    function matchRoom(uint256 _roomIndex) public payable {
     // 바로 할당을 위한 생성
@@ -68,5 +72,36 @@ contract ChickenHouseTest {
 
   }
 
+  // 1. 지도에 모든 치킨집을 나타내기 위해서 모든 치킨집의 정보를 가져올 get 함수가 필요하다?
+  //function getChickenHouse1() public view returns () 
+
+  // 2. 원하는 치킨집의 정보를 가져온다?
+  function getChickenHouse1() public view returns (string memory, string memory, string memory, uint8){
+    return (storeName, latitude, longitude, onOff); 
+  }
+
+  // 2.5 원하는 치킨집의 메뉴를 가져온다?
+  function getStoreMenu() public view returns(string[] memory, uint256[] memory){
+    string[] memory chickenName = new string[](menus.length);
+    uint256[] memory price = new uint256[](menus.length); 
+    
+    for(uint i = 0 ; i < menus.length; i++){
+      chickenName[i] = menus[i].chickenName;
+      price[i] = menus[i].price;
+    }
+    return (chickenName, price);
+  }
+
+  // 2.5 다른방법
+    // function getStoreMenu2(uint256 _storeIndex) public view returns(Menu[] memory){
+    //   return menus;
+    // }
+
+
+  // 3. 원하는 주문방의 정보를 가져오기
+  function getRoomInfo(uint256 _roomIndex) public view returns (string memory, uint256, uint8, address){
+   OrderRoomTest orderRoom = orderRooms[_roomIndex];
+    return orderRoom.getRoomInfo();
+  }
 
 }

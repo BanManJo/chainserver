@@ -44,4 +44,8 @@ contract OrderRoomTest {
 
     return state;
   }
+
+  function getRoomInfo() public view returns (string memory, uint256, uint8, address){
+    return (chickenName, price, state, user1);
+  } 
 }
