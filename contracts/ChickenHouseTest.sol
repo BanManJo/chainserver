@@ -24,6 +24,8 @@ contract ChickenHouseTest {
   
  constructor (string memory _storeName) public {
           storeName = _storeName;
+          latitude = _latitude;
+          longitude = _longitude;
       }
   // 메뉴(치킨, 가격)등록
   function registerChickenHouse(string[] memory _chickenNames, uint256[] memory _prices) public returns(uint256) {

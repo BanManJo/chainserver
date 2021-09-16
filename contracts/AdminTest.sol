@@ -16,8 +16,8 @@ contract AdminTest {
 
 
   // ChickenHouse (메뉴와함께) 등록
-  function registerChickenHouse(string memory _storeName, string[] memory _chickenNames, uint [] memory _prices) public {
-    ChickenHouseTest chickenHouse = new ChickenHouseTest(_storeName);
+  function registerChickenHouse(string memory _storeName,string memory latitude,string memory _longitude, string[] memory _chickenNames, uint256 [] memory _prices) public {
+    ChickenHouseTest chickenHouse = new ChickenHouseTest(_storeName, _latitude, _longitude);
     chickenHouse.registerChickenHouse(_chickenNames, _prices);
     storeIndexs[_storeName] = (chickenHouses.push(chickenHouse)) - 1;
     
