@@ -11,7 +11,8 @@ contract ChickenHouseTest {
   uint8 onOff;
   string latitude;
   string longitude;
-  Menu menu;
+  Menu[] menus;
+  
 
   struct Menu {
     string chickenName;
