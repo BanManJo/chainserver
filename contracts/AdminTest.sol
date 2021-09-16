@@ -1,5 +1,5 @@
 pragma solidity ^0.5.2;
-
+pragma experimental ABIEncoderV2;
 import "./ChickenHouseTest.sol";
 
 // Admin 역할
@@ -9,9 +9,10 @@ contract AdminTest {
 
   function() external payable {}
 
-  // ChickenHouse 등록
-  function registerChickenHouse(string[]  _chickens, string[] prices ) public {
-    ChickenHouseTest chickenHouse = new ChickenHouseTest(string[] _chickens, string[] prices);
+  // ChickenHouse (메뉴와함께) 등록
+  function registerChickenHouse(string memory _storeName, string[] memory _chickenNames, uint [] memory _prices) public {
+    ChickenHouseTest chickenHouse = new ChickenHouseTest(_storeName);
+    chickenHouse.registerChickenHouse(_chickenNames, _prices);
     // 인스턴스를 만들어 준것 ?
     chickenHouses.push(chickenHouse);
   }

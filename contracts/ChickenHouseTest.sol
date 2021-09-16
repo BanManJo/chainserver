@@ -1,31 +1,37 @@
 pragma solidity ^0.5.2;
-
+pragma experimental ABIEncoderV2;
 import "./OrderRoomTest.sol";
 
 // ChickenHouse 역할
 contract ChickenHouseTest {
+  OrderRoomTest[] orderRooms;
+
   string storeName;
   address owner;
   uint8 onOff;
   string latitude;
   string longitude;
   Menu menu;
-  
 
   struct Menu {
-    uint256 price;
     string chickenName;
+    uint256 price;
   }
-
-
-  OrderRoomTest[] orderRooms;
-  Price[] price;
-  ChickenName[] chickenName;
-  //생성자
-  constructor(string[] memory _chickens, uint256[] memory _prices) public {
-        Menu =_chickens;
-        Menu = _prices;    
+  Menu[] public menus;
+ constructor (string memory _storeName) public {
+          storeName = _storeName;
       }
+  // 메뉴(치킨, 가격)등록
+  function registerChickenHouse(string[] memory _chickenNames, uint256[] memory _prices) public returns(uint256) {
+       require(_chickenNames.length == _prices.length);
+        
+        for(uint i= 0;i<_chickenNames.length;i++){
+            menus.push( Menu(_chickenNames[i], _prices[i]) );
+        }
+        return menus.length;    
+      }
+      
+    
   // 주문방 만들기
   function createRoom(uint256 _price, uint256 _finish, string memory _chickenName) public payable {
     // room 생성!!!!
