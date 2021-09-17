@@ -11,14 +11,15 @@ contract AdminTest {
   function() external payable {}
 
   mapping (string => uint) storeIndexs;
+  mapping (string => uint) storeIndexs;
 
 
 
 
   // ChickenHouse (메뉴와함께) 등록
-  function registerChickenHouse(string memory _storeName,string memory _latitude,string memory _longitude, string[] memory _chickenNames, uint256 [] memory _prices) public {
+  function registerChickenHouse(string memory _storeName,string memory _latitude,string memory _longitude, string[] memory _chickenNames, uint256 [] memory _prices, uint256[] memory _menuIndex) public {
     ChickenHouseTest chickenHouse = new ChickenHouseTest(_storeName, _latitude, _longitude);
-    chickenHouse.registerChickenHouse(_chickenNames, _prices);
+    chickenHouse.registerChickenHouse(_chickenNames, _prices, _menuIndex);
     storeIndexs[_storeName] = (chickenHouses.push(chickenHouse)) - 1;
     
   }
