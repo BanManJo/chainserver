@@ -65,30 +65,29 @@ contract ChickenHouseTest is Ownable {
       
     
   // 주문방 만들기
-  function createRoom(uint256 _price, uint256 _finish, string memory _chickenName, uint _valueToSend) public payable {
+  function createRoom(uint256 _price, uint256 _finish, string memory _chickenName) public payable {
     // room 생성!!!!
     OrderRoomTest orderRoom = new OrderRoomTest(_price, _finish, _chickenName);
     orderRooms.push(orderRoom);
     // OrderRoomTest a = OrderRoomTest(address(uint160(address(orderRoom))));
     // a.blah.value(_valueToSend)(0,0);
-    address(uint160(address(orderRoom))).transfer(_valueToSend);
+    address(uint160(address(orderRoom))).transfer(msg.value);
     roomCount++;
   }
 
   function() external payable {}
   
       
-   function matchRoom(uint256 _roomIndex) public payable {
+   function matchRoom(string memory _chickenName, uint256 _roomIndex) public payable {
       OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
      address(uint160(address(orderRoom))).transfer(address(this).balance);
-    orderRoom.matchRoom();
+    orderRoom.matchRoom(_chickenName, _roomIndex);
   }
   
-  function approveOrder(uint256 _roomIndex) public onlyOwner {
+  function approveOrder(string memory _chickenName, uint256 _roomIndex) public onlyOwner {
     OrderRoomTest orderRoom = findOrderRoom(_roomIndex); 
     // require (tx.origin == owner);  
-    orderRoom.approveOrder();
-    
+    orderRoom.approveOrder(_chickenName, _roomIndex);
   }
 
   function getBalance(uint256 _roomIndex) public view returns (uint256) {
@@ -140,6 +139,23 @@ contract ChickenHouseTest is Ownable {
       }else if(onOff == 1){
         onOff = 0;
       }
+   }
+
+   // 하나의 메뉴를 추가하는 함수
+   function addOneMenu(string memory _chickenName, uint256 _price) public { 
+     menus.push(Menu(_chickenName, _price));
+   }
+
+  // 가게이름을 바꾸는 함수
+  //  function changeStoreName(string memory _changeName) public {
+  //    storeName = _changeName;
+  //  }
+
+  // location 변경 함수
+   function changeLocation(string memory _longitude, string memory _latitude) public {     
+     longitude = _longitude;
+     latitude = _latitude;
+
    }
 
 }

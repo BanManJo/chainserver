@@ -11,6 +11,7 @@ contract AdminTest {
   function() external payable {}
 
   mapping (string => uint) storeIndexs;
+  
 
 
   // 해당 치킨하우스를 찾는 함수
@@ -42,9 +43,8 @@ contract AdminTest {
   function createRoom(string memory _storeName, uint256 _price, uint256 _finish, string memory _chickenName) public payable {
     // chickenHouse를 찾자 storeName 으로!
     ChickenHouseTest chickenHouse = findChickenHouse(_storeName);  
-    address(uint160(address(chickenHouse))).transfer(msg.value); // msg.value : 사용자가 전달한 이더
-    uint _valueToSend = msg.value;
-    chickenHouse.createRoom(_price, _finish, _chickenName, _valueToSend);
+    // address(uint160(address(chickenHouse))).transfer(msg.value); // msg.value : 사용자가 전달한 이더
+    chickenHouse.createRoom.value(msg.value)(_price, _finish, _chickenName);
   }
   
   // 방 Match 함수
@@ -52,14 +52,14 @@ contract AdminTest {
     // 바로 할당을 위한 생성
     ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
     address(uint160(address(chickenHouse))).transfer(msg.value);
-    chickenHouse.matchRoom(_roomIndex);
+    chickenHouse.matchRoom(_storeName, _roomIndex);
   }
 
   //가게 주인이 돈받는 함수
   function approveOrder(string memory _storeName , uint256 _roomIndex) public {
     //여기는 해당되는 방을 찾기위해 _storeName으로 치킨집을 찾고 _roomNumber로 해당되는 방을 찾는다 
     ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
-    chickenHouse.approveOrder(_roomIndex);
+    chickenHouse.approveOrder(_storeName , _roomIndex);
   }
 
  function getBalanceOfRoom(uint256 _storeIndex, uint256 _roomIndex) public view
@@ -101,8 +101,27 @@ contract AdminTest {
   
 
   // onOff 변경 함수
-   function onOff(string memory _storeName) public {
+   function changeOnOff(string memory _storeName) public {
       ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
           chickenHouse.changeOnOff();
    }
+
+  // 하나의 메뉴를 추가하는 함수
+   function addOneMenu(string memory _storeName, string memory _chickenName, uint256 _price) public {
+    ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
+    chickenHouse.addOneMenu(_chickenName, _price);  
+  }
+
+  // 가게 이름을 수정하는 함수
+  // function changeStoreName(string memory _storeName, string memory _changeName) public {
+  //   ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
+  //     chickenHouse.changeStoreName(_changeName);
+  // }
+
+  // location 변경 함수
+    function changeLocation(string memory _storeName, string memory _longitude, string memory _latitude) public {
+      ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
+        chickenHouse.changeLocation(_longitude, _latitude);
+    }
+
 }
