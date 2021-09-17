@@ -1,7 +1,7 @@
 pragma solidity ^0.5.2;
 pragma experimental ABIEncoderV2;
 import "./OrderRoomTest.sol";
-import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "./Ownable.sol";
 
 // ChickenHouse 역할
 contract ChickenHouseTest is Ownable {

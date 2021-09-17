@@ -11,7 +11,6 @@ contract AdminTest {
   function() external payable {}
 
   mapping (string => uint) storeIndexs;
-  mapping (string => uint) storeIndexs;
 
 
   // 해당 치킨하우스를 찾는 함수
