@@ -142,8 +142,8 @@ contract ChickenHouseTest is Ownable {
    }
 
    // 하나의 메뉴를 추가하는 함수
-   function addOneMenu(string memory _chickenName, uint256 _price) public { 
-     menus.push(Menu(_chickenName, _price));
+   function addOneMenu(string memory _chickenName, uint256 _price, uint256 _menuState, uint256 _menuIndex) public { 
+     menus.push(Menu(_chickenName, _price, _menuState, _menuIndex));
    }
 
   // 가게이름을 바꾸는 함수

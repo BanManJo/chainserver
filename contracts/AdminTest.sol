@@ -107,9 +107,9 @@ contract AdminTest {
    }
 
   // 하나의 메뉴를 추가하는 함수
-   function addOneMenu(string memory _storeName, string memory _chickenName, uint256 _price) public {
+   function addOneMenu(string memory _storeName, string memory _chickenName, uint256 _price, uint256 _menuState,uint256 _menuIndex) public {
     ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
-    chickenHouse.addOneMenu(_chickenName, _price);  
+    chickenHouse.addOneMenu(_chickenName, _price, _menuState, _menuIndex);  
   }
 
   // 가게 이름을 수정하는 함수
