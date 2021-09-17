@@ -4,11 +4,12 @@ import "./OrderRoomTest.sol";
 
 // ChickenHouse 역할
 contract ChickenHouseTest {
+  
   OrderRoomTest[] orderRooms;
 
   string storeName;
   address owner;
-  uint8 onOff;
+  uint8 onOff = 0;
   string latitude;
   string longitude;
   Menu[] public menus;
@@ -22,11 +23,17 @@ contract ChickenHouseTest {
     uint256 price;
   }
   
- constructor (string memory _storeName) public {
+ constructor (string memory _storeName, string memory _latitude, string memory _longitude) public {
           storeName = _storeName;
           latitude = _latitude;
           longitude = _longitude;
       }
+
+  function findOrderRoom(uint256 _roomIndex) public view returns(OrderRoomTest){
+          OrderRoomTest orderRoom = orderRooms[_roomIndex];
+          return orderRoom;
+  }
+
   // 메뉴(치킨, 가격)등록
   function registerChickenHouse(string[] memory _chickenNames, uint256[] memory _prices) public returns(uint256) {
        require(_chickenNames.length == _prices.length);
@@ -53,26 +60,25 @@ contract ChickenHouseTest {
   
       
    function matchRoom(uint256 _roomIndex) public payable {
-    // 바로 할당을 위한 생성
-    OrderRoomTest orderRoom = orderRooms[_roomIndex];
+      OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
      address(uint160(address(orderRoom))).transfer(address(this).balance);
     orderRoom.matchRoom();
   }
   
   function approveOrder(uint256 _roomIndex) public {
-    OrderRoomTest orderRoom = orderRooms[_roomIndex]; // 해당 치킨하우스에 해당하는 orderRoom을 찾는다.
+    OrderRoomTest orderRoom = findOrderRoom(_roomIndex); 
     // require (tx.origin == owner);  
     orderRoom.approveOrder();
   }
 
   function getBalance(uint256 _roomIndex) public view returns (uint256) {
-    OrderRoomTest orderRoom = orderRooms[_roomIndex];
+    OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
     return address(orderRoom).balance;
 
   }
 
    function getStateRoom(uint256 _roomIndex) public view returns (uint256) {
-    OrderRoomTest orderRoom = orderRooms[_roomIndex];
+    OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
     return orderRoom.getStateRoom();
 
   }
@@ -103,8 +109,17 @@ contract ChickenHouseTest {
 
   // 3. 원하는 주문방의 정보를 가져오기
   function getRoomInfo(uint256 _roomIndex) public view returns (string memory, uint256, uint8, address){
-   OrderRoomTest orderRoom = orderRooms[_roomIndex];
+   OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
     return orderRoom.getRoomInfo();
   }
+
+  // onOff 변경 함수
+   function changeOnOff() public {
+      if(onOff == 0){
+        onOff = 1;
+      }else if(onOff == 1){
+        onOff = 0;
+      }
+   }
 
 }
