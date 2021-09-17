@@ -5,7 +5,7 @@ contract("AdminTest", (accounts) => {
     instance = await AdminTest.deployed();
 
     // registerChickenHouse 함수 호출!
-    await instance.registerChickenHouse("다글다글", ["후라이드","양념"], [3000,4000]);
+    await instance.registerChickenHouse("다글다글", "위도", "경도", ["후라이드","양념"], [3000,4000]);
     console.log("pass1");
 
     // createRoom 함수 호출!

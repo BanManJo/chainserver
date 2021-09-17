@@ -11,7 +11,8 @@ contract OrderRoomTest {
   address public user1;
   address public user2;
 
-
+  event matchFinish(string _chickenName, uint256 _roomIndex);
+  event approveFinish(string _chickenName, uint256 _roomIndex);
 
   function() external payable {}
 
@@ -26,19 +27,22 @@ contract OrderRoomTest {
       }
   // function blah(int x, int y) payable public {}
 
-  function matchRoom() external returns (bool){
+  function matchRoom(string memory _chickenName, uint256 _roomIndex) public {
       state = 2;
       user2 = tx.origin;
-    
-      return true;
+
+      emit matchFinish(_chickenName,  _roomIndex);
+      
   }
 
-  function approveOrder() external payable{
-    tx.origin.transfer(address(this).balance); 
-    //방에 들어있는 돈들 출금
-    
+  function approveOrder(string memory _chickenName,  uint256 _roomIndex) public payable{
+    tx.origin.transfer(address(this).balance);  
     state = 3;
-    //여기서 이제 event 날린다?     
+    
+
+    emit approveFinish(_chickenName,  _roomIndex);
+
+    
   }
 
   function getStateRoom() external view returns (uint){
