@@ -1,6 +1,7 @@
 pragma solidity ^0.5.2;
 pragma experimental ABIEncoderV2;
 import "./OrderRoomTest.sol";
+import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
 // ChickenHouse 역할
 contract ChickenHouseTest {
@@ -23,7 +24,7 @@ contract ChickenHouseTest {
     uint256 price;
   }
   
- constructor (string memory _storeName, string memory _latitude, string memory _longitude) public {
+ constructor (string memory _storeName, string memory _latitude, string memory _longitude , address _owner) Ownable(_owner) public {
           storeName = _storeName;
           latitude = _latitude;
           longitude = _longitude;
@@ -65,10 +66,11 @@ contract ChickenHouseTest {
     orderRoom.matchRoom();
   }
   
-  function approveOrder(uint256 _roomIndex) public {
+  function approveOrder(uint256 _roomIndex) public onlyOwner {
     OrderRoomTest orderRoom = findOrderRoom(_roomIndex); 
     // require (tx.origin == owner);  
     orderRoom.approveOrder();
+    
   }
 
   function getBalance(uint256 _roomIndex) public view returns (uint256) {

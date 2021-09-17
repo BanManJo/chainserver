@@ -22,7 +22,7 @@ contract AdminTest {
 
   // ChickenHouse (메뉴와함께) 등록
   function registerChickenHouse(string memory _storeName,string memory _latitude,string memory _longitude, string[] memory _chickenNames, uint256 [] memory _prices) public {
-    ChickenHouseTest chickenHouse = new ChickenHouseTest(_storeName, _latitude, _longitude);
+    ChickenHouseTest chickenHouse = new ChickenHouseTest(_storeName, _latitude, _longitude,  msg.sender);
     chickenHouse.registerChickenHouse(_chickenNames, _prices);
     storeIndexs[_storeName] = (chickenHouses.push(chickenHouse)) - 1;
     
@@ -52,9 +52,7 @@ contract AdminTest {
     chickenHouse.approveOrder(_roomIndex);
   }
 
- function getBalanceOfRoom(uint256 _storeIndex, uint256 _roomIndex)
-    public
-    view
+ function getBalanceOfRoom(uint256 _storeIndex, uint256 _roomIndex) public view
     returns (uint256)
   {
     ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
@@ -66,8 +64,9 @@ contract AdminTest {
     view
     returns (uint256)
   {
-    ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
-    return chickenHouse.getStateRoom(_roomIndex);
+    return 0;
+    //ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
+    //return chickenHouse.getStateRoom(_roomIndex);
   }
 
 
