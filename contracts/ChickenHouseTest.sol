@@ -15,12 +15,14 @@ contract ChickenHouseTest is Ownable {
   Menu[] public menus;
   uint256 roomCount = 0;
 
+  enum FreshJuiceSize{ SUNSAL, BBUE, LARGE }
 
-  
 
   struct Menu {
     string chickenName;
     uint256 price;
+    uint256 menuState;
+    uint256 menuIndex;
   }
   
  constructor (string memory _storeName, string memory _latitude, string memory _longitude , address _owner) Ownable(_owner) public {
@@ -35,14 +37,31 @@ contract ChickenHouseTest is Ownable {
   }
 
   // 메뉴(치킨, 가격)등록
-  function registerChickenHouse(string[] memory _chickenNames, uint256[] memory _prices) public returns(uint256) {
+  function registerChickenHouse(string[] memory _chickenNames, uint256[] memory _prices,uint256[] memory _menuState) public returns(uint256) {
        require(_chickenNames.length == _prices.length);
 
         for(uint i = 0 ; i <_chickenNames.length ; i++){
-            menus.push( Menu(_chickenNames[i], _prices[i]) );
+            menus.push( Menu(_chickenNames[i], _prices[i], _menuState[i],i));
         }
         return menus.length;    
       }
+      //메뉴 인덱스 값의 치킨이름, 가격 , state(뼈1, 순살2) 수정 함수
+      function setMenu(uint _index, string memory _chickenNames, uint256 _price, uint256 _menuState) public returns (bool) {
+          require(_index < menus.length);
+          
+          menus[_index].chickenName = _chickenNames;
+          menus[_index].price = _price;
+          menus[_index].menuState = _menuState;
+      }
+      // 메뉴 인덱스 삭제 후 맨뒤에 인덱스 해당 삭제된 인덱스로 가져오기 함수
+      function deleteMenu(uint256 _index) public returns (bool){
+          menus[_index] = menus[ menus.length-1];
+          menus[_index].menuIndex = _index;
+          delete menus[menus.length-1];
+          
+      }
+    
+
       
     
   // 주문방 만들기
