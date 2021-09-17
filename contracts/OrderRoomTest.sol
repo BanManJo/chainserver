@@ -11,8 +11,6 @@ contract OrderRoomTest {
   address public user1;
   address public user2;
 
-
-
   function() external payable {}
 
       constructor(uint256 _price, uint256 _finish, string memory _chickenName) public {

@@ -11,8 +11,7 @@ contract AdminTest {
 
   // ChickenHouse 등록
   function registerChickenHouse() public {
-    ChickenHouseTest chickenHouse = new ChickenHouseTest();
-    // 인스턴스를 만들어 준것 ?
+    ChickenHouseTest chickenHouse = new ChickenHouseTest(msg.sender);
     chickenHouses.push(chickenHouse);
   }
 
@@ -33,15 +32,13 @@ contract AdminTest {
   }
 
   //가게 주인이 돈받는 함수
-  function approveOrder(uint256 _storeIndex , uint256 _roomIndex) public {
+  function approveOrder(uint256 _storeIndex , uint256 _roomIndex) public payable {
     //여기는 해당되는 방을 찾기위해 _storeName으로 치킨집을 찾고 _roomNumber로 해당되는 방을 찾는다 
     ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
     chickenHouse.approveOrder(_roomIndex);
   }
 
- function getBalanceOfRoom(uint256 _storeIndex, uint256 _roomIndex)
-    public
-    view
+ function getBalanceOfRoom(uint256 _storeIndex, uint256 _roomIndex) public view
     returns (uint256)
   {
     ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
@@ -53,8 +50,9 @@ contract AdminTest {
     view
     returns (uint256)
   {
-    ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
-    return chickenHouse.getStateRoom(_roomIndex);
+    return 0;
+    //ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
+    //return chickenHouse.getStateRoom(_roomIndex);
   }
   
 }

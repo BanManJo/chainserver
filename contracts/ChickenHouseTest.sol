@@ -1,46 +1,41 @@
 pragma solidity ^0.5.2;
 
 import "./OrderRoomTest.sol";
+import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
 // ChickenHouse 역할
-contract ChickenHouseTest {
+contract ChickenHouseTest is Ownable {
+  OrderRoomTest[] orderRooms;
   string storeName;
-  address owner;
   uint8 onOff;
   string latitude;
   string longitude;
-  Menu menu;
   
-
-  struct Menu {
+    struct Menu {
     uint256 price;
     string chickenName;
   }
 
+  constructor (address _owner) Ownable(_owner) public {
 
-  OrderRoomTest[] orderRooms;
+  }
+
 
   // 주문방 만들기
   function createRoom(uint256 _price, uint256 _finish, string memory _chickenName) public payable {
     // room 생성!!!!
     OrderRoomTest orderRoom = new OrderRoomTest(_price, _finish, _chickenName);
     orderRooms.push(orderRoom);
-    address(uint160(address(orderRoom))).transfer(address(this).balance);
+    address(uint160(address(orderRoom))).transfer(10);
   }
 
   function() external payable {}
       
-   function matchRoom(uint256 _roomIndex) public payable {
-    // 바로 할당을 위한 생성
-    OrderRoomTest orderRoom = orderRooms[_roomIndex];
-     address(uint160(address(orderRoom))).transfer(address(this).balance);
-    orderRoom.matchRoom();
-  }
-  
-  function approveOrder(uint256 _roomIndex) public {
-    OrderRoomTest orderRoom = orderRooms[_roomIndex]; // 해당 치킨하우스에 해당하는 orderRoom을 찾는다.
+  function approveOrder(uint256 _roomNumber) public onlyOwner {
+    OrderRoomTest orderRoom = orderRooms[_roomNumber]; // 해당 치킨하우스에 해당하는 orderRoom을 찾는다.
     // require (tx.origin == owner);  
     orderRoom.approveOrder();
+    
   }
 
   function getBalance(uint256 _roomIndex) public view returns (uint256) {
@@ -49,11 +44,11 @@ contract ChickenHouseTest {
 
   }
 
-   function getStateRoom(uint256 _roomIndex) public view returns (uint256) {
+   function matchRoom(uint256 _roomIndex) public payable {
+    // 바로 할당을 위한 생성
     OrderRoomTest orderRoom = orderRooms[_roomIndex];
-    return orderRoom.getStateRoom();
-
+     address(uint160(address(orderRoom))).transfer(msg.value);
+    orderRoom.matchRoom();
   }
-
 
 }
