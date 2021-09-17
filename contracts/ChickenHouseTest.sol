@@ -4,12 +4,11 @@ import "./OrderRoomTest.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
 // ChickenHouse 역할
-contract ChickenHouseTest {
+contract ChickenHouseTest is Ownable {
   
   OrderRoomTest[] orderRooms;
 
   string storeName;
-  address owner;
   uint8 onOff = 0;
   string latitude;
   string longitude;
