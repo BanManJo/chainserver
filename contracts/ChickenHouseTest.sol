@@ -22,7 +22,7 @@ contract ChickenHouseTest {
     uint256 price;
   }
   
- constructor (string memory _storeName) public {
+ constructor (string memory _storeName, string memory _latitude, string memory _longitude) public {
           storeName = _storeName;
           latitude = _latitude;
           longitude = _longitude;
