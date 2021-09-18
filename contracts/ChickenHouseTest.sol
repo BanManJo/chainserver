@@ -151,6 +151,7 @@ contract ChickenHouseTest is Ownable {
   //    storeName = _changeName;
   //  }
 
+
   // location 변경 함수
    function changeLocation(string memory _longitude, string memory _latitude) public {     
      longitude = _longitude;

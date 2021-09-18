@@ -12,6 +12,12 @@ contract AdminTest {
 
   mapping (string => uint) storeIndexs;
   
+  //치킨집 배열에 길이를 반환하는 함수
+  function getStoreReturn() public view returns(uint256) {
+    // ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
+    return chickenHouses.length;
+  }
+
 
 
   // 해당 치킨하우스를 찾는 함수
