@@ -124,4 +124,16 @@ contract AdminTest {
         chickenHouse.changeLocation(_longitude, _latitude);
     }
 
+  // user1이 돈을 넣고 시간이 초과되었을때 환불되는 함수
+    function refund1(string memory _storeName, uint256 _roomIndex) public {
+      ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
+      chickenHouse.refund1(_roomIndex);
+    }
+
+  // user1과 user2 가 돈을 넣고 시간이 초과되었을때 환불되는 함수
+    // function refund1(string memory _storeName, uint256 _roomIndex) public {
+    //   ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
+    //   chickenHouse.refund1(_roomIndex);
+    // }   
+
 }

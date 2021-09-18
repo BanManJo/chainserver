@@ -41,7 +41,7 @@ contract ChickenHouseTest is Ownable {
        require(_chickenNames.length == _prices.length);
 
         for(uint i = 0 ; i <_chickenNames.length ; i++){
-            menus.push( Menu(_chickenNames[i], _prices[i], _menuState[i], i));
+            menus.push(Menu(_chickenNames[i], _prices[i], _menuState[i], i));
         }
         return menus.length;    
       }
@@ -142,7 +142,7 @@ contract ChickenHouseTest is Ownable {
    }
 
    // 하나의 메뉴를 추가하는 함수
-   function addOneMenu(string memory _chickenName, uint256 _price, uint256 _menuState, uint256 _menuIndex) public { 
+      function addOneMenu(string memory _chickenName, uint256 _price, uint256 _menuState, uint256 _menuIndex) public { 
          menus.push( Menu(_chickenName, _price, _menuState, menus.length - 1));
 
    }
@@ -158,5 +158,13 @@ contract ChickenHouseTest is Ownable {
      latitude = _latitude;
 
    }
+  
+  // user1이 돈을 넣고 시간이 초과되었을때 환불되는 함수
+    function refund1(uint256 _roomIndex) public {
+      OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
+      orderRoom.refund1();
+    }  
+
+   
 
 }

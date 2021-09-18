@@ -52,5 +52,11 @@ contract OrderRoomTest {
 
   function getRoomInfo() public view returns (string memory, uint256, uint8, address){
     return (chickenName, price, state, user1);
-  } 
+  }
+
+  // user1이 돈을 넣고 시간이 초과되었을때 환불되는 함수
+  function refund1() public {
+      tx.origin.transfer(address(this).balance);  
+      
+    }   
 }
