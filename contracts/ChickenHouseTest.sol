@@ -58,6 +58,7 @@ contract ChickenHouseTest is Ownable {
           menus[_index] = menus[ menus.length-1];
           menus[_index].menuIndex = _index;
           delete menus[menus.length-1];
+          menus.length--;
           
       }
     
@@ -142,7 +143,7 @@ contract ChickenHouseTest is Ownable {
    }
 
    // 하나의 메뉴를 추가하는 함수
-      function addOneMenu(string memory _chickenName, uint256 _price, uint256 _menuState, uint256 _menuIndex) public { 
+      function addOneMenu(string memory _chickenName, uint256 _price, uint256 _menuState) public { 
          menus.push( Menu(_chickenName, _price, _menuState, menus.length - 1));
 
    }
