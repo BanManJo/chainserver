@@ -37,11 +37,11 @@ contract ChickenHouseTest is Ownable {
   }
 
   // 메뉴(치킨, 가격)등록
-  function registerChickenHouse(string[] memory _chickenNames, uint256[] memory _prices,uint256[] memory _menuState) public returns(uint256) {
+  function registerChickenHouse(string[] memory _chickenNames, uint256[] memory _prices, uint256[] memory _menuState) public returns(uint256) {
        require(_chickenNames.length == _prices.length);
 
         for(uint i = 0 ; i <_chickenNames.length ; i++){
-            menus.push( Menu(_chickenNames[i], _prices[i], _menuState[i],i));
+            menus.push(Menu(_chickenNames[i], _prices[i], _menuState[i], i));
         }
         return menus.length;    
       }
@@ -58,6 +58,7 @@ contract ChickenHouseTest is Ownable {
           menus[_index] = menus[ menus.length-1];
           menus[_index].menuIndex = _index;
           delete menus[menus.length-1];
+          menus.length--;
           
       }
     
@@ -103,10 +104,16 @@ contract ChickenHouseTest is Ownable {
   }
 
 
-  // 2. 원하는 치킨집의 정보를 가져온다?
+  // 2. 원하는 치킨집의 정보를 치킨집 이름으로 가져온다?
   function getChickenHouse() public view returns (string memory, string memory, string memory, uint8){
     return (storeName, latitude, longitude, onOff); 
   }
+  
+  // 2.2 원하는 치킨집의 정보를 인덱스로 가져온다?
+  function getChickenHouse2() public view returns (string memory, string memory, string memory, uint8){
+    return (storeName, latitude, longitude, onOff); 
+  }
+
 
   // 2.5 원하는 치킨집의 메뉴를 가져온다?
   function getStoreMenu() public view returns(string[] memory, uint256[] memory){
@@ -142,8 +149,9 @@ contract ChickenHouseTest is Ownable {
    }
 
    // 하나의 메뉴를 추가하는 함수
-   function addOneMenu(string memory _chickenName, uint256 _price, uint256 _menuState, uint256 _menuIndex) public { 
-     menus.push(Menu(_chickenName, _price, _menuState, _menuIndex));
+      function addOneMenu(string memory _chickenName, uint256 _price, uint256 _menuState) public { 
+         menus.push( Menu(_chickenName, _price, _menuState, menus.length - 1));
+
    }
 
   // 가게이름을 바꾸는 함수
@@ -158,5 +166,13 @@ contract ChickenHouseTest is Ownable {
      latitude = _latitude;
 
    }
+  
+  // user1이 돈을 넣고 시간이 초과되었을때 환불되는 함수
+    function refund1(uint256 _roomIndex) public {
+      OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
+      orderRoom.refund1();
+    }  
+
+   
 
 }
