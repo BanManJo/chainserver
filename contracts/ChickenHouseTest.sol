@@ -104,10 +104,16 @@ contract ChickenHouseTest is Ownable {
   }
 
 
-  // 2. 원하는 치킨집의 정보를 가져온다?
+  // 2. 원하는 치킨집의 정보를 치킨집 이름으로 가져온다?
   function getChickenHouse() public view returns (string memory, string memory, string memory, uint8){
     return (storeName, latitude, longitude, onOff); 
   }
+  
+  // 2.2 원하는 치킨집의 정보를 인덱스로 가져온다?
+  function getChickenHouse2() public view returns (string memory, string memory, string memory, uint8){
+    return (storeName, latitude, longitude, onOff); 
+  }
+
 
   // 2.5 원하는 치킨집의 메뉴를 가져온다?
   function getStoreMenu() public view returns(string[] memory, uint256[] memory){

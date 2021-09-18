@@ -79,19 +79,36 @@ contract AdminTest {
     //return chickenHouse.getStateRoom(_roomIndex);
   }
 
-
-  // 2. 원하는 치킨집의 정보를 가져온다?
-    function getChickenHouse(string memory _storeName) public view returns(string memory, string memory, string memory, uint8){
+  // 2. 원하는 치킨집의 정보를 치킨집 이름으로 가져온다?
+    function getChickenHouse(string memory _storeName) public view returns(
+      string memory storeName, 
+      string memory latitude, 
+      string memory longitude, 
+      uint8 closed){
         ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
         return chickenHouse.getChickenHouse();
     }
 
-  // 2.5 원하는 치킨집의 메뉴를 가져온다?
-    function getStoreMenu(string memory _storeName) public view returns(string[] memory, uint256[] memory){
-        ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
-        return chickenHouse.getStoreMenu();
+  // 2.2 원하는 치킨집의 정보를 인덱스로 가져온다?
+    function getChickenHouse2(uint256 _storeIndex) public view returns(
+      string memory storeName, 
+      string memory latitude, 
+      string memory longitude, 
+      uint8 closed){
+        ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
+        return chickenHouse.getChickenHouse2();
     }
 
+
+    // 2.5 원하는 치킨집의 메뉴를 가져온다?
+    function getStoreMenu(string memory _storeName)
+        public
+        view
+        returns (string[] memory, uint256[] memory)
+    {
+        ChickenHouseTest chickenHouse = chickenHouses[storeIndexs[_storeName]];
+        return chickenHouse.getStoreMenu();
+    }
 
   // 3. 원하는 주문방의 정보를 가져온다?
     function getRoomInfo(string memory _storeName, uint256 _roomIndex) public view returns(string memory, uint256, uint8, address){
