@@ -99,7 +99,6 @@ contract AdminTest {
         return chickenHouse.getChickenHouse2();
     }
 
-    }
 
     // 2.5 원하는 치킨집의 메뉴를 가져온다?
     function getStoreMenu(string memory _storeName)
