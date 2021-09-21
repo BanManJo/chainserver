@@ -5,7 +5,14 @@ contract("AdminTest", (accounts) => {
     instance = await AdminTest.deployed();
 
     // registerChickenHouse 함수 호출!
-    await instance.registerChickenHouse("다글다글", "위도", "경도", ["후라이드","양념"], [3000,4000]);
+    await instance.registerChickenHouse(
+      "다글다글",
+      "위도",
+      "경도",
+      ["후라이드", "양념"],
+      [3000, 4000],
+      [0, 1]
+    );
     console.log("pass1");
 
     // createRoom 함수 호출!
@@ -33,7 +40,7 @@ contract("AdminTest", (accounts) => {
     assert.equal(balance, "2000000000000000000");
 
     //출금 함수 호출
-    await instance.approveOrder(0, 0);
+    await instance.approveOrder("다글다글", 0);
     balance = await instance.getBalanceOfRoom.call(0, 0);
     assert.equal(balance, "0");
   });

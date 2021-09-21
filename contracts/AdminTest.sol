@@ -66,8 +66,8 @@ contract AdminTest {
  function matchRoom(string memory _storeName, uint256 _roomIndex) public payable {
     // 바로 할당을 위한 생성
     ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
-    address(uint160(address(chickenHouse))).transfer(msg.value);
-    chickenHouse.matchRoom(_storeName, _roomIndex);
+    // address(uint160(address(chickenHouse))).transfer(msg.value);
+    chickenHouse.matchRoom.value(msg.value)(_storeName, _roomIndex);
   }
 
   //가게 주인이 돈받는 함수
@@ -162,10 +162,10 @@ contract AdminTest {
       chickenHouse.refund1(_roomIndex);
     }
 
-  // user1과 user2 가 돈을 넣고 시간이 초과되었을때 환불되는 함수
-    // function refund1(string memory _storeName, uint256 _roomIndex) public {
-    //   ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
-    //   chickenHouse.refund1(_roomIndex);
-    // }   
+  // user1과 user2 에게 환불
+    function refund2(string memory _storeName, uint256 _roomIndex) public {
+      ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
+      chickenHouse.refund2(_roomIndex);
+    }   
 
 }

@@ -81,11 +81,11 @@ contract ChickenHouseTest is Ownable {
       
    function matchRoom(string memory _chickenName, uint256 _roomIndex) public payable {
       OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
-     address(uint160(address(orderRoom))).transfer(address(this).balance);
+     address(uint160(address(orderRoom))).transfer(msg.value);
     orderRoom.matchRoom(_chickenName, _roomIndex);
   }
   
-  function approveOrder(string memory _chickenName, uint256 _roomIndex) public onlyOwner {
+  function approveOrder(string memory _chickenName, uint256 _roomIndex) public onlyOwner  {
     OrderRoomTest orderRoom = findOrderRoom(_roomIndex); 
     // require (tx.origin == owner);  
     orderRoom.approveOrder(_chickenName, _roomIndex);
@@ -171,7 +171,16 @@ contract ChickenHouseTest is Ownable {
     function refund1(uint256 _roomIndex) public {
       OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
       orderRoom.refund1();
+      roomCount--;
+    }
+
+  // user1과 user2 에게 환불
+   function refund2(uint256 _roomIndex) public {
+      OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
+      orderRoom.refund2();
+      roomCount--;
     }  
+    
 
    
 
