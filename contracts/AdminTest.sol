@@ -9,7 +9,7 @@ contract AdminTest {
   ChickenHouseTest[] chickenHouses;
 
   function() external payable {}
-
+    
   mapping (string => uint) storeIndexs;
   
   //치킨집 배열에 길이를 반환하는 함수
@@ -29,10 +29,19 @@ contract AdminTest {
 
   // ChickenHouse (메뉴와함께) 등록
   function registerChickenHouse(string memory _storeName,string memory _latitude,string memory _longitude, string[] memory _chickenNames, uint256 [] memory _prices, uint256[] memory _menuState) public {
-    ChickenHouseTest chickenHouse = new ChickenHouseTest(_storeName, _latitude, _longitude,  msg.sender);
-    chickenHouse.registerChickenHouse(_chickenNames, _prices, _menuState);
-    storeIndexs[_storeName] = (chickenHouses.push(chickenHouse)) - 1;
+    if(chickenHouses.length ==  0){
+        // require(msg.sender == 0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c);
+        ChickenHouseTest chickenHouse = new ChickenHouseTest(_storeName, _latitude, _longitude,  msg.sender);
     
+        storeIndexs[_storeName] = chickenHouses.push(chickenHouse) - 1;
+         chickenHouse.registerChickenHouse(_chickenNames, _prices, _menuState);
+    }else{
+    ChickenHouseTest chickenHouse = new ChickenHouseTest(_storeName, _latitude, _longitude,  msg.sender);
+    
+    storeIndexs[_storeName] = chickenHouses.push(chickenHouse) - 1;
+    chickenHouse.registerChickenHouse(_chickenNames, _prices, _menuState);
+    }    
+    // 1 2 3 4 5 
   }
   //메뉴 인덱스 값의 치킨이름, 가격 , state(뼈1, 순살2) 수정 함수
    function setMenu(string memory _storeName, uint _index, string memory _chickenNames, uint256 _price, uint256 _menuState) public returns (bool) {

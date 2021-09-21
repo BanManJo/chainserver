@@ -37,13 +37,13 @@ contract ChickenHouseTest is Ownable {
   }
 
   // 메뉴(치킨, 가격)등록
-  function registerChickenHouse(string[] memory _chickenNames, uint256[] memory _prices, uint256[] memory _menuState) public returns(uint256) {
+  function registerChickenHouse(string[] memory _chickenNames, uint256[] memory _prices, uint256[] memory _menuState) public {
        require(_chickenNames.length == _prices.length);
 
         for(uint i = 0 ; i <_chickenNames.length ; i++){
             menus.push(Menu(_chickenNames[i], _prices[i], _menuState[i], i));
         }
-        return menus.length;    
+          
       }
       //메뉴 인덱스 값의 치킨이름, 가격 , state(뼈1, 순살2) 수정 함수
       function setMenu(uint _index, string memory _chickenNames, uint256 _price, uint256 _menuState) public returns (bool) {
