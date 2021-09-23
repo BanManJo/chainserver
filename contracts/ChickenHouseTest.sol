@@ -85,7 +85,7 @@ contract ChickenHouseTest is Ownable {
     orderRoom.matchRoom(_chickenName, _roomIndex);
   }
   
-  function approveOrder(string memory _chickenName, uint256 _roomIndex) public onlyOwner  {
+  function approveOrder(string memory _chickenName, uint256 _roomIndex, address _address) public onlyOwner(_address)  {
     OrderRoomTest orderRoom = findOrderRoom(_roomIndex); 
     // require (tx.origin == owner);  
     orderRoom.approveOrder(_chickenName, _roomIndex);

@@ -74,7 +74,7 @@ contract AdminTest {
   function approveOrder(string memory _storeName , uint256 _roomIndex) public {
     //여기는 해당되는 방을 찾기위해 _storeName으로 치킨집을 찾고 _roomNumber로 해당되는 방을 찾는다 
     ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
-    chickenHouse.approveOrder(_storeName , _roomIndex);
+    chickenHouse.approveOrder(_storeName , _roomIndex, msg.sender);
   }
 
  function getBalanceOfRoom(uint256 _storeIndex, uint256 _roomIndex) public view
