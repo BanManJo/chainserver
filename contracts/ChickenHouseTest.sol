@@ -41,13 +41,13 @@ contract ChickenHouseTest is Ownable {
   }
 
   // 메뉴(치킨, 가격)등록
-  function registerChickenHouse(string[] memory _chickenNames, uint256[] memory _prices, uint256[] memory _menuState) public returns(uint256) {
+  function registerChickenHouse(string[] memory _chickenNames, uint256[] memory _prices, uint256[] memory _menuState) public {
        require(_chickenNames.length == _prices.length);
 
         for(uint i = 0 ; i <_chickenNames.length ; i++){
             menus.push(Menu(_chickenNames[i], _prices[i], _menuState[i], i));
         }
-        return menus.length;    
+          
       }
       //메뉴 인덱스 값의 치킨이름, 가격 , state(뼈1, 순살2) 수정 함수
       function setMenu(uint _index, string memory _chickenNames, uint256 _price, uint256 _menuState) public returns (bool) {
@@ -85,11 +85,11 @@ contract ChickenHouseTest is Ownable {
       
    function matchRoom(string memory _chickenName, uint256 _roomIndex) public payable {
       OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
-     address(uint160(address(orderRoom))).transfer(address(this).balance);
+     address(uint160(address(orderRoom))).transfer(msg.value);
     orderRoom.matchRoom(_chickenName, _roomIndex);
   }
   
-  function approveOrder(string memory _chickenName, uint256 _roomIndex) public onlyOwner {
+  function approveOrder(string memory _chickenName, uint256 _roomIndex, address _address) public onlyOwner(_address)  {
     OrderRoomTest orderRoom = findOrderRoom(_roomIndex); 
     // require (tx.origin == owner);  
     orderRoom.approveOrder(_chickenName, _roomIndex);
@@ -175,7 +175,16 @@ contract ChickenHouseTest is Ownable {
     function refund1(uint256 _roomIndex) public {
       OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
       orderRoom.refund1();
+      roomCount--;
+    }
+
+  // user1과 user2 에게 환불
+   function refund2(uint256 _roomIndex) public {
+      OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
+      orderRoom.refund2();
+      roomCount--;
     }  
+    
 
    
 

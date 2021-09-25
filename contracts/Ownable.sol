@@ -29,16 +29,16 @@ contract Ownable {
     /**
      * @dev Throws if called by any account other than the owner.
      */
-    modifier onlyOwner() {
-        require(isOwner());
+    modifier onlyOwner(address _address) {
+        require(isOwner(_address));
         _;
     }
 
     /**
      * @return true if `msg.sender` is the owner of the contract.
      */
-    function isOwner() public view returns (bool) {
-        return msg.sender == _owner;
+    function isOwner(address _address) public view returns (bool) {
+        return _address == _owner;
     }
 
     /**
@@ -47,26 +47,26 @@ contract Ownable {
      * It will not be possible to call the functions with the `onlyOwner`
      * modifier anymore.
      */
-    function renounceOwnership() public onlyOwner {
-        emit OwnershipTransferred(_owner, address(0));
-        _owner = address(0);
-    }
+    // function renounceOwnership() public onlyOwner {
+    //     emit OwnershipTransferred(_owner, address(0));
+    //     _owner = address(0);
+    // }
 
     /**
      * @dev Allows the current owner to transfer control of the contract to a newOwner.
      * @param newOwner The address to transfer ownership to.
      */
-    function transferOwnership(address newOwner) public onlyOwner {
-        _transferOwnership(newOwner);
-    }
+    // function transferOwnership(address newOwner) public onlyOwner {
+    //     _transferOwnership(newOwner);
+    // }
 
     /**
      * @dev Transfers control of the contract to a newOwner.
      * @param newOwner The address to transfer ownership to.
      */
-    function _transferOwnership(address newOwner) internal {
-        require(newOwner != address(0));
-        emit OwnershipTransferred(_owner, newOwner);
-        _owner = newOwner;
-    }
+    // function _transferOwnership(address newOwner) internal {
+    //     require(newOwner != address(0));
+    //     emit OwnershipTransferred(_owner, newOwner);
+    //     _owner = newOwner;
+    // }
 }

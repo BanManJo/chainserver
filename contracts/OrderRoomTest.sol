@@ -56,7 +56,13 @@ contract OrderRoomTest {
 
   // user1이 돈을 넣고 시간이 초과되었을때 환불되는 함수
   function refund1() public {
-      tx.origin.transfer(address(this).balance);  
+      address(uint160(address(user1))).transfer(address(this).balance);  
       
-    }   
+  }
+  
+  // user1과 user2 에게 환불
+    function refund2() public {
+     address(uint160(address(user1))).transfer(address(this).balance / 2);  
+      address(uint160(address(user2))).transfer(address(this).balance);
+  }    
 }

@@ -9,7 +9,7 @@ contract AdminTest {
   ChickenHouseTest[] chickenHouses;
 
   function() external payable {}
-
+    
   mapping (string => uint) storeIndexs;
   
   //치킨집 배열에 길이를 반환하는 함수
@@ -34,10 +34,19 @@ contract AdminTest {
 
   // ChickenHouse (메뉴와함께) 등록
   function registerChickenHouse(string memory _storeName,string memory _latitude,string memory _longitude, string[] memory _chickenNames, uint256 [] memory _prices, uint256[] memory _menuState) public {
-    ChickenHouseTest chickenHouse = new ChickenHouseTest(_storeName, _latitude, _longitude,  msg.sender);
-    chickenHouse.registerChickenHouse(_chickenNames, _prices, _menuState);
-    storeIndexs[_storeName] = (chickenHouses.push(chickenHouse)) - 1;
+    if(chickenHouses.length ==  0){
+        // require(msg.sender == 0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c);
+        ChickenHouseTest chickenHouse = new ChickenHouseTest(_storeName, _latitude, _longitude,  msg.sender);
     
+        storeIndexs[_storeName] = chickenHouses.push(chickenHouse) - 1;
+         chickenHouse.registerChickenHouse(_chickenNames, _prices, _menuState);
+    }else{
+    ChickenHouseTest chickenHouse = new ChickenHouseTest(_storeName, _latitude, _longitude,  msg.sender);
+    
+    storeIndexs[_storeName] = chickenHouses.push(chickenHouse) - 1;
+    chickenHouse.registerChickenHouse(_chickenNames, _prices, _menuState);
+    }    
+    // 1 2 3 4 5 
   }
   //메뉴 인덱스 값의 치킨이름, 가격 , state(뼈1, 순살2) 수정 함수
    function setMenu(string memory _storeName, uint _index, string memory _chickenNames, uint256 _price, uint256 _menuState) public returns (bool ) {
@@ -62,15 +71,15 @@ contract AdminTest {
  function matchRoom(string memory _storeName, uint256 _roomIndex) public payable {
     // 바로 할당을 위한 생성
     ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
-    address(uint160(address(chickenHouse))).transfer(msg.value);
-    chickenHouse.matchRoom(_storeName, _roomIndex);
+    // address(uint160(address(chickenHouse))).transfer(msg.value);
+    chickenHouse.matchRoom.value(msg.value)(_storeName, _roomIndex);
   }
 
   //가게 주인이 돈받는 함수
   function approveOrder(string memory _storeName , uint256 _roomIndex) public {
     //여기는 해당되는 방을 찾기위해 _storeName으로 치킨집을 찾고 _roomNumber로 해당되는 방을 찾는다 
     ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
-    chickenHouse.approveOrder(_storeName , _roomIndex);
+    chickenHouse.approveOrder(_storeName , _roomIndex, msg.sender);
   }
 
  function getBalanceOfRoom(uint256 _storeIndex, uint256 _roomIndex) public view
@@ -158,10 +167,10 @@ contract AdminTest {
       chickenHouse.refund1(_roomIndex);
     }
 
-  // user1과 user2 가 돈을 넣고 시간이 초과되었을때 환불되는 함수
-    // function refund1(string memory _storeName, uint256 _roomIndex) public {
-    //   ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
-    //   chickenHouse.refund1(_roomIndex);
-    // }   
+  // user1과 user2 에게 환불
+    function refund2(string memory _storeName, uint256 _roomIndex) public {
+      ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
+      chickenHouse.refund2(_roomIndex);
+    }   
 
 }
