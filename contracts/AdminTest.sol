@@ -13,15 +13,20 @@ contract AdminTest {
   mapping (string => uint) storeIndexs;
   
   //치킨집 배열에 길이를 반환하는 함수
-  function getStoreReturn() public view returns(uint256) {
+  function getStoreCount() public view returns(uint256 storeCount) {
     // ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
     return chickenHouses.length;
   }
-
+  
+  //치킨집 배열에 길이를 반환하는 함수
+  function getRoomsCount(string memory _storeName) public view returns(uint256 roomsCount) {
+    ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
+    return chickenHouse.getRoomsCount();
+  }
 
 
   // 해당 치킨하우스를 찾는 함수
-  function findChickenHouse(string memory _storeName) public view returns(ChickenHouseTest) {
+  function findChickenHouse(string memory _storeName) public view returns(ChickenHouseTest chickenHouse) {
         ChickenHouseTest chickenHouse = chickenHouses[storeIndexs[_storeName]];
         return chickenHouse;
   }
@@ -35,7 +40,7 @@ contract AdminTest {
     
   }
   //메뉴 인덱스 값의 치킨이름, 가격 , state(뼈1, 순살2) 수정 함수
-   function setMenu(string memory _storeName, uint _index, string memory _chickenNames, uint256 _price, uint256 _menuState) public returns (bool) {
+   function setMenu(string memory _storeName, uint _index, string memory _chickenNames, uint256 _price, uint256 _menuState) public returns (bool ) {
       ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
         chickenHouse.setMenu(_index, _chickenNames, _price, _menuState);
 
@@ -69,7 +74,7 @@ contract AdminTest {
   }
 
  function getBalanceOfRoom(uint256 _storeIndex, uint256 _roomIndex) public view
-    returns (uint256)
+    returns (uint256 balance)
   {
     ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
     return chickenHouse.getBalance(_roomIndex);
@@ -78,7 +83,7 @@ contract AdminTest {
   function getStateRoom(uint256 _storeIndex, uint256 _roomIndex)
     public
     view
-    returns (uint256)
+    returns (uint256 state)
   {
     return 0;
     //ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
@@ -110,14 +115,14 @@ contract AdminTest {
     function getStoreMenu(string memory _storeName)
         public
         view
-        returns (string[] memory, uint256[] memory)
+        returns (string[] memory chickens, uint256[] memory prices)
     {
         ChickenHouseTest chickenHouse = chickenHouses[storeIndexs[_storeName]];
         return chickenHouse.getStoreMenu();
     }
 
   // 3. 원하는 주문방의 정보를 가져온다?
-    function getRoomInfo(string memory _storeName, uint256 _roomIndex) public view returns(string memory, uint256, uint8, address){
+    function getRoomInfo(string memory _storeName, uint256 _roomIndex) public view returns(string memory chicken, uint256 price, uint8 state, address user1){
         ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
          return chickenHouse.getRoomInfo(_roomIndex);
     }

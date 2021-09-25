@@ -31,6 +31,10 @@ contract ChickenHouseTest is Ownable {
           longitude = _longitude;
       }
 
+  function getRoomsCount() public view returns(uint256){
+    return orderRooms.length;
+  }
+
   function findOrderRoom(uint256 _roomIndex) public view returns(OrderRoomTest){
           OrderRoomTest orderRoom = orderRooms[_roomIndex];
           return orderRoom;
