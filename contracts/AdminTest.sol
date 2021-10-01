@@ -110,7 +110,7 @@ contract AdminTest {
         // chickenHouse를 찾자 storeName 으로!
         ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
         // address(uint160(address(chickenHouse))).transfer(msg.value); // msg.value : 사용자가 전달한 이더
-        chickenHouse.createRoom.value(msg.value)(_price, _finish, _chickenName);
+        chickenHouse.createRoom.value(msg.value)(_price, _finish, _chickenName , _storeName);
     }
 
     // 방 Match 함수

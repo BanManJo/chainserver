@@ -67,10 +67,10 @@ contract ChickenHouseTest is Ownable {
       }
     
 
-      
+    event userPage(uint256 _price, uint256 _finish, string _storeName, string _chickenName, uint256 _roomNumber, uint256 _date, address _Ownedby);
     
   // 주문방 만들기
-  function createRoom(uint256 _price, uint256 _finish, string memory _chickenName) public payable {
+  function createRoom(uint256 _price, uint256 _finish, string memory _storeName,string memory _chickenName) public payable {
     // room 생성!!!!
     OrderRoomTest orderRoom = new OrderRoomTest(_price, _finish, _chickenName);
     orderRooms.push(orderRoom);
@@ -78,6 +78,11 @@ contract ChickenHouseTest is Ownable {
     // a.blah.value(_valueToSend)(0,0);
     address(uint160(address(orderRoom))).transfer(msg.value);
     roomCount++;
+    
+    uint256 _roomNumber = orderRooms.length - 1;
+    uint256 _date = block.timestamp;
+    address _Ownedby = msg.sender;
+    emit userPage(_price, _finish, _storeName,_chickenName, _roomNumber, _date, _Ownedby);
   }
 
   function() external payable {}
