@@ -85,7 +85,7 @@ contract AdminTest {
         uint256 _index,
         string memory _chickenNames,
         uint256 _price,
-        uint256 _menuState
+        uint8 _menuState
     ) public returns (bool) {
         ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
         chickenHouse.setMenu(_index, _chickenNames, _price, _menuState);
@@ -223,7 +223,7 @@ contract AdminTest {
         string memory _storeName,
         string memory _chickenName,
         uint256 _price,
-        uint256 _menuState
+        uint8 _menuState
     ) public {
         ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
         chickenHouse.addOneMenu(_chickenName, _price, _menuState);
