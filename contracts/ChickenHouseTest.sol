@@ -21,7 +21,7 @@ contract ChickenHouseTest is Ownable {
   struct Menu {
     string chickenName;
     uint256 price;
-    uint256 menuState;
+    uint8 menuState;
     uint256 menuIndex;
   }
   
@@ -83,16 +83,23 @@ contract ChickenHouseTest is Ownable {
   function() external payable {}
   
       
-   function matchRoom(string memory _chickenName, uint256 _roomIndex) public payable {
+   function matchRoom(string memory _storeName, uint256 _roomIndex) public payable {
       OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
      address(uint160(address(orderRoom))).transfer(msg.value);
-    orderRoom.matchRoom(_chickenName, _roomIndex);
+    orderRoom.matchRoom(_storeName, _roomIndex);
   }
   
-  function approveOrder(string memory _chickenName, uint256 _roomIndex, address _address) public onlyOwner(_address)  {
+  function approveOrder(string memory _storeName, uint256 _roomIndex, address _address) public onlyOwner(_address)  {
     OrderRoomTest orderRoom = findOrderRoom(_roomIndex); 
-    // require (tx.origin == owner);  
-    orderRoom.approveOrder(_chickenName, _roomIndex);
+    
+    orderRoom.approveOrder(_storeName, _roomIndex);
+  }
+  
+  function orderReject(string memory _chickenName, uint256 _roomIndex, address _address) public onlyOwner(_address)  {
+    OrderRoomTest orderRoom = findOrderRoom(_roomIndex); 
+    
+    orderRoom.orderReject();
+    roomCount--;
   }
 
   function getBalance(uint256 _roomIndex) public view returns (uint256) {
@@ -172,18 +179,18 @@ contract ChickenHouseTest is Ownable {
    }
   
   // user1이 돈을 넣고 시간이 초과되었을때 환불되는 함수
-    function refund1(uint256 _roomIndex) public {
-      OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
-      orderRoom.refund1();
-      roomCount--;
-    }
+    // function refund1(uint256 _roomIndex) public {
+    //   OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
+    //   orderRoom.refund1();
+    //   roomCount--;
+    // }
 
   // user1과 user2 에게 환불
-   function refund2(uint256 _roomIndex) public {
-      OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
-      orderRoom.refund2();
-      roomCount--;
-    }  
+  //  function refund2(uint256 _roomIndex) public {
+  //     OrderRoomTest orderRoom = findOrderRoom(_roomIndex);
+  //     orderRoom.refund2();
+  //     roomCount--;
+  //   }  
     
 
    

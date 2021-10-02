@@ -27,22 +27,25 @@ contract OrderRoomTest {
       }
   // function blah(int x, int y) payable public {}
 
-  function matchRoom(string memory _chickenName, uint256 _roomIndex) public {
+  function matchRoom(string memory _storeName, uint256 _roomIndex) public {
       state = 2;
       user2 = tx.origin;
 
-      emit matchFinish(_chickenName,  _roomIndex);
+      emit matchFinish(_storeName,  _roomIndex);
       
   }
 
-  function approveOrder(string memory _chickenName,  uint256 _roomIndex) public payable{
+  function approveOrder(string memory _storeName,  uint256 _roomIndex) public payable{
     tx.origin.transfer(address(this).balance);  
     state = 3;
     
 
-    emit approveFinish(_chickenName,  _roomIndex);
+    emit approveFinish(_storeName,  _roomIndex);
+  }
 
-    
+  function orderReject() public {
+    state = 4;
+
   }
 
   function getStateRoom() external view returns (uint){
@@ -55,14 +58,14 @@ contract OrderRoomTest {
   }
 
   // user1이 돈을 넣고 시간이 초과되었을때 환불되는 함수
-  function refund1() public {
-      address(uint160(address(user1))).transfer(address(this).balance);  
+  // function refund1() public {
+  //     address(uint160(address(user1))).transfer(address(this).balance);  
       
-  }
+  // }
   
   // user1과 user2 에게 환불
-    function refund2() public {
-     address(uint160(address(user1))).transfer(address(this).balance / 2);  
-      address(uint160(address(user2))).transfer(address(this).balance);
-  }    
+  //   function refund2() public {
+  //    address(uint160(address(user1))).transfer(address(this).balance / 2);  
+  //     address(uint160(address(user2))).transfer(address(this).balance);
+  // }    
 }

@@ -44,7 +44,7 @@ contract AdminTest {
         string memory _longitude,
         string[] memory _chickenNames,
         uint256[] memory _prices,
-        uint256[] memory _menuState
+        uint8[] memory _menuState
     ) public {
         if (chickenHouses.length == 0) {
             // require(msg.sender == 0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c);
@@ -130,6 +130,13 @@ contract AdminTest {
         ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
         chickenHouse.approveOrder(_storeName, _roomIndex, msg.sender);
     }
+    
+    //시간 초과 및 사장님이 거절하기를 눌렀을 때 해당하는 방 상태를 4로 바꾸는 함수
+    function orderReject(string memory _storeName, uint256 _roomIndex) public {
+        //여기는 해당되는 방을 찾기위해 _storeName으로 치킨집을 찾고 _roomNumber로 해당되는 방을 찾는다
+        ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
+        chickenHouse.orderReject(_storeName, _roomIndex, msg.sender);
+    }
 
     function getBalanceOfRoom(uint256 _storeIndex, uint256 _roomIndex)
         public
@@ -145,7 +152,7 @@ contract AdminTest {
         view
         returns (uint256 state)
     {
-        return 0;
+        return state;
         //ChickenHouseTest chickenHouse = chickenHouses[_storeIndex];
         //return chickenHouse.getStateRoom(_roomIndex);
     }
@@ -239,14 +246,16 @@ contract AdminTest {
     }
 
     // user1이 돈을 넣고 시간이 초과되었을때 환불되는 함수
-    function refund1(string memory _storeName, uint256 _roomIndex) public {
-        ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
-        chickenHouse.refund1(_roomIndex);
-    }
+    // function refund1(string memory _storeName, uint256 _roomIndex) public {
+    //     ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
+    //     chickenHouse.refund1(_roomIndex);
+    // }
 
     // user1과 user2 에게 환불
-    function refund2(string memory _storeName, uint256 _roomIndex) public {
-        ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
-        chickenHouse.refund2(_roomIndex);
-    }
+    // function refund2(string memory _storeName, uint256 _roomIndex) public {
+    //     ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
+    //     chickenHouse.refund2(_roomIndex);
+    // }
+
+    
 }
