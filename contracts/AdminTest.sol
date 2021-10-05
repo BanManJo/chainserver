@@ -80,7 +80,7 @@ contract AdminTest {
     }
 
     //메뉴 인덱스 값의 치킨이름, 가격 , state(뼈1, 순살2) 수정 함수
-    function setMenu(
+   /* function setMenu(
         string memory _storeName,
         uint256 _index,
         string memory _chickenNames,
@@ -89,7 +89,7 @@ contract AdminTest {
     ) public returns (bool) {
         ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
         chickenHouse.setMenu(_index, _chickenNames, _price, _menuState);
-    }
+    } */
 
     // 메뉴 인덱스 삭제 후 맨뒤에 인덱스 해당 삭제된 인덱스로 가져오기 함수
     function deleteMenu(string memory _storeName, uint256 _index)
@@ -100,6 +100,7 @@ contract AdminTest {
         chickenHouse.deleteMenu(_index);
     }
 
+    event userPage(uint256 _price, uint256 _finish, string _storeName, string _chickenName, uint256 _roomNumber, uint256 _date, address _Ownedby);
     // 방만들기 함수
     function createRoom(
         string memory _storeName,
@@ -111,6 +112,11 @@ contract AdminTest {
         ChickenHouseTest chickenHouse = findChickenHouse(_storeName);
         // address(uint160(address(chickenHouse))).transfer(msg.value); // msg.value : 사용자가 전달한 이더
         chickenHouse.createRoom.value(msg.value)(_price, _finish, _chickenName , _storeName);
+
+        uint256 _roomNumber =1;
+        uint256 _date = block.timestamp;
+        address _Ownedby = msg.sender;
+        emit userPage(_price, _finish, _storeName,_chickenName, _roomNumber, _date, _Ownedby);
     }
 
     // 방 Match 함수
