@@ -18,11 +18,11 @@
 //  *
 //  */
 
-const HDWalletProvider = require('@truffle/hdwallet-provider');
-const fs = require('fs');
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+const fs = require("fs");
 
-const infuraKey = fs.readFileSync('.infurakey').toString().trim();
-const mnemonic = fs.readFileSync('.secret').toString().trim();
+const infuraKey = fs.readFileSync(".infurakey").toString().trim();
+const mnemonic = fs.readFileSync(".secret").toString().trim();
 
 module.exports = {
   //   /**
@@ -43,9 +43,9 @@ module.exports = {
     //     // options below to some value.
     //     //
     development: {
-      host: '127.0.0.1', // Localhost (default: none)
+      host: "127.0.0.1", // Localhost (default: none)
       port: 7545, // Standard Ethereum port (default: none)
-      network_id: '*', // Any network (default: none)
+      network_id: "*", // Any network (default: none)
     },
 
     //     // Another network with more advanced options...
@@ -64,7 +64,7 @@ module.exports = {
       provider: () =>
         new HDWalletProvider(
           mnemonic,
-          `https://ropsten.infura.io/v3/${infuraKey}`,
+          `https://ropsten.infura.io/v3/${infuraKey}`
         ),
       network_id: 3, // Ropsten's id
       gas: 5500000, // Ropsten has a lower block limit than mainnet
@@ -89,15 +89,16 @@ module.exports = {
   //   // Configure your compilers
   compilers: {
     solc: {
-      //       version: "0.5.2",    // Fetch exact version from solc-bin (default: truffle's version)
-      //       docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
-      //       settings: {          // See the solidity docs for advice about optimization and evmVersion
-      //        optimizer: {
-      //          enabled: false,
-      //          runs: 200
-      //        },
-      //        evmVersion: "byzantium"
-      //       }
+      version: "0.5.2", // Fetch exact version from solc-bin (default: truffle's version)
+      // docker: true, // Use "0.5.1" you've installed locally with docker (default: false)
+      // settings: {
+      //   // See the solidity docs for advice about optimization and evmVersion
+      //   optimizer: {
+      //     enabled: false,
+      //     runs: 200,
+      //   },
+      //   evmVersion: "byzantium",
+      // },
     },
   },
 };
