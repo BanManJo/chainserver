@@ -37,11 +37,11 @@ contract OrderRoom {
     emit matchFinish(chickenName, _roomIndex);
   }
 
-  function approveOrder(string memory _chickenName, uint256 _roomIndex)
+  function approveOrder(string memory _storeName, uint256 _roomIndex, address _owner)
     public
     payable
   {
-    tx.origin.transfer(address(this).balance);
+        address(uint160(address(_owner))).transfer(address(this).balance);
     state = 3;
   }
 

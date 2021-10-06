@@ -108,22 +108,21 @@ contract ChickenHouse is Ownable {
   // function() external payable {}
 
   function approveOrder(
-    string memory _chickenName,
-    uint256 _roomIndex,
-    address _address
-  ) public onlyOwner(_address) {
+    string memory _storeName,
+    uint256 _roomIndex
+    
+  ) public onlyOwner() {
     OrderRoom orderRoom = findOrderRoom(_roomIndex);
-    // require (tx.origin == owner);
-    orderRoom.approveOrder(_chickenName, _roomIndex);
+    orderRoom.approveOrder(_storeName, _roomIndex, owner());
 
-    emit approveFinish(_chickenName, _roomIndex);
+    emit approveFinish(_storeName, _roomIndex);
   }
 
   function orderReject(
     string memory _chickenName,
     uint256 _roomIndex,
     address _address
-  ) public onlyOwner(_address) {
+  ) public onlyOwner() {
     OrderRoom orderRoom = findOrderRoom(_roomIndex);
 
     orderRoom.orderReject();
