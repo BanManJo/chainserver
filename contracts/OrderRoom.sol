@@ -10,7 +10,6 @@ contract OrderRoom {
   address private user1;
   address private user2;
 
-  event matchFinish(string _chickenName, uint256 _roomIndex);
 
   function() external payable {}
 
@@ -30,22 +29,21 @@ contract OrderRoom {
 
   // function blah(int x, int y) payable public {}
 
-  function matchRoom(uint256 _roomIndex) public payable {
+  function matchRoom(address _address) public payable {
     state = 2;
-    user2 = msg.sender;
+    user2 = _address;
 
-    emit matchFinish(chickenName, _roomIndex);
   }
 
-  function approveOrder(string memory _storeName, uint256 _roomIndex, address _owner)
+  function approveOrder(uint256 _roomIndex, address _owner)
     public
     payable
   {
-        address(uint160(address(_owner))).transfer(address(this).balance);
+    address(uint160(address(_owner))).transfer(address(this).balance);
     state = 3;
   }
 
-  function orderReject() public {
+  function finishCook() public {
     state = 4;
   }
 
@@ -80,5 +78,6 @@ contract OrderRoom {
   function refund2() public {
     address(uint160(address(user1))).transfer(address(this).balance / 2);
     address(uint160(address(user2))).transfer(address(this).balance);
+    state = 4;
   }
 }
