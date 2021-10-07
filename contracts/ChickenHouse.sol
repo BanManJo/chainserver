@@ -83,12 +83,16 @@ contract ChickenHouse is Ownable {
     delete menus[menus.length - 1];
     menus.length--;
   }
-
+  //userMyPage 이벤트 기록
+  event roomCreated(string _storeName, string _chickenName, uint256 _price,
+  uint256 _roomNumber, OrderRoom orderRoom, uint256 _finish, uint256 _date, address indexed _Ownedby);
   // 주문방 만들기
   function createRoom(
+    string memory _storeName,
+    string memory _chickenName,
     uint256 _price,
-    uint256 _finish,
-    string memory _chickenName
+    uint256 _finish
+    
   ) public payable {
     // room 생성!!!!
     OrderRoom orderRoom = new OrderRoom(
@@ -103,6 +107,9 @@ contract ChickenHouse is Ownable {
     address(uint160(address(orderRoom))).transfer(msg.value);
     roomCount++;
     uint256 _roomNumber = orderRooms.length - 1;
+    uint256 _date = block.timestamp;
+    address _Ownedby = msg.sender;
+    emit roomCreated(_storeName, _chickenName, _price, _roomNumber, orderRoom, _finish, _date, _Ownedby);
   }
 
   // function() external payable {}
