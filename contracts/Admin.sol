@@ -9,6 +9,13 @@ contract Admin {
 
   mapping(string => uint256) storeIndexs;
 
+  event registerStore(
+    string storeName,
+    string latitude,
+    string longitude,
+    address storeAddress
+  );
+
   //치킨집 배열에 길이를 반환하는 함수
   function getStoreCount() public view returns (uint256 storeCount) {
     // ChickenHouse chickenHouse = findChickenHouse(_storeName);
@@ -46,27 +53,35 @@ contract Admin {
     uint256[] memory _prices,
     uint8[] memory _menuState
   ) public {
-    if (chickenHouses.length == 0) {
-      // require(msg.sender == 0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c);
-      ChickenHouse chickenHouse = new ChickenHouse(
-        _storeName,
-        _latitude,
-        _longitude,
-        msg.sender
-      );
+    // if (chickenHouses.length == 0) {
+    // require(msg.sender == 0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c);
+    ChickenHouse chickenHouse = new ChickenHouse(
+      _storeName,
+      _latitude,
+      _longitude,
+      msg.sender
+    );
 
-      storeIndexs[_storeName] = chickenHouses.push(chickenHouse) - 1;
-      chickenHouse.registerChickenHouse(_chickenNames, _prices, _menuState);
-    } else {
-      ChickenHouse chickenHouse = new ChickenHouse(
-        _storeName,
-        _latitude,
-        _longitude,
-        msg.sender
-      );
+    storeIndexs[_storeName] = chickenHouses.push(chickenHouse) - 1;
+    chickenHouse.registerChickenHouse(_chickenNames, _prices, _menuState);
+    // }
+    // else {
+    //   ChickenHouse chickenHouse = new ChickenHouse(
+    //     _storeName,
+    //     _latitude,
+    //     _longitude,
+    //     msg.sender
+    //   );
 
-      storeIndexs[_storeName] = chickenHouses.push(chickenHouse) - 1;
-      chickenHouse.registerChickenHouse(_chickenNames, _prices, _menuState);
-    }
+    //   storeIndexs[_storeName] = chickenHouses.push(chickenHouse) - 1;
+    //   chickenHouse.registerChickenHouse(_chickenNames, _prices, _menuState);
+    // }
+
+    emit registerStore(
+      _storeName,
+      _latitude,
+      _longitude,
+      address(chickenHouse)
+    );
   }
 }
