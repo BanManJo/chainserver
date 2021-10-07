@@ -26,6 +26,8 @@ contract ChickenHouse is Ownable {
     uint8 menuState;
     uint256 menuIndex;
   }
+  
+  event matchFinish(uint256 _roomIndex);
 
   event approveFinish(string _chickenName, uint256 _roomIndex);
 
@@ -112,6 +114,17 @@ contract ChickenHouse is Ownable {
     emit roomCreated(_storeName, _chickenName, _price, _roomNumber, orderRoom, _finish, _date, _Ownedby);
   }
 
+  function matchRoom(
+    uint256 _roomIndex
+  ) public payable {
+    OrderRoom orderRoom = findOrderRoom(_roomIndex);
+    orderRoom.matchRoom(msg.sender);
+    address(uint160(address(orderRoom))).transfer(msg.value);
+
+    emit matchFinish(_roomIndex);
+
+  }
+
   // function() external payable {}
 
   function approveOrder(
@@ -120,20 +133,17 @@ contract ChickenHouse is Ownable {
     
   ) public onlyOwner() {
     OrderRoom orderRoom = findOrderRoom(_roomIndex);
-    orderRoom.approveOrder(_storeName, _roomIndex, owner());
+    orderRoom.approveOrder(_roomIndex, owner());
 
     emit approveFinish(_storeName, _roomIndex);
   }
 
-  function orderReject(
-    string memory _chickenName,
-    uint256 _roomIndex,
-    address _address
+  function finishCook(
+    uint256 _roomIndex
   ) public onlyOwner() {
     OrderRoom orderRoom = findOrderRoom(_roomIndex);
 
-    orderRoom.orderReject();
-    roomCount--;
+    orderRoom.finishCook();
   }
 
   // 방의 모인 금액을 가져옴
@@ -236,7 +246,7 @@ contract ChickenHouse is Ownable {
   }
 
   // user1과 user2 에게 환불
-  function refund2(uint256 _roomIndex) public {
+  function refund2(uint256 _roomIndex) onlyOwner() public {
     OrderRoom orderRoom = findOrderRoom(_roomIndex);
     orderRoom.refund2();
     roomCount--;
