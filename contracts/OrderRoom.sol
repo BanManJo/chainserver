@@ -10,6 +10,7 @@ contract OrderRoom {
   uint256 private finishTime;
   address private user1;
   address private user2;
+  uint256 private receiveTime;
 
   function() external payable {}
 
@@ -34,6 +35,9 @@ contract OrderRoom {
   function matchRoom(address _address) public payable {
     state = 2;
     user2 = _address;
+
+    receiveTime = now;
+
   }
 
   function approveOrder(uint256 _roomIndex, address _owner) public payable {
@@ -58,6 +62,8 @@ contract OrderRoom {
       uint8 _state,
       uint8 _menuState,
       address _user1
+      uint256 _receiveTime
+
     )
   {
     return (
@@ -65,7 +71,8 @@ contract OrderRoom {
       _price = price,
       _state = state,
       _menuState = menuState,
-      _user1 = user1
+      _user1 = user1,
+      _receiveTime = receiveTime
     );
   }
 
