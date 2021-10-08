@@ -26,9 +26,20 @@ contract ChickenHouse is Ownable {
     uint8 menuState;
     uint256 menuIndex;
   }
-  
-  event matchFinish(uint256 _roomIndex);
 
+  //userMyPage 이벤트 기록
+  event roomCreated(
+    string _storeName,
+    string _chickenName,
+    uint256 _price,
+    uint256 _roomNumber,
+    OrderRoom orderRoom,
+    uint256 _finish,
+    uint8 _menuState,
+    uint256 _date,
+    address indexed _Ownedby
+  );
+  event matchFinish(uint256 _roomIndex);
   event approveFinish(string _chickenName, uint256 _roomIndex);
 
   constructor(
@@ -85,22 +96,21 @@ contract ChickenHouse is Ownable {
     delete menus[menus.length - 1];
     menus.length--;
   }
-  //userMyPage 이벤트 기록
-  event roomCreated(string _storeName, string _chickenName, uint256 _price,
-  uint256 _roomNumber, OrderRoom orderRoom, uint256 _finish, uint256 _date, address indexed _Ownedby);
+
   // 주문방 만들기
   function createRoom(
     string memory _storeName,
     string memory _chickenName,
     uint256 _price,
-    uint256 _finish
-    
+    uint256 _finish,
+    uint8 _menuState
   ) public payable {
     // room 생성!!!!
     OrderRoom orderRoom = new OrderRoom(
       _price,
       _finish,
       _chickenName,
+      _menuState,
       msg.sender
     );
     orderRooms.push(orderRoom);
@@ -111,36 +121,40 @@ contract ChickenHouse is Ownable {
     uint256 _roomNumber = orderRooms.length - 1;
     uint256 _date = block.timestamp;
     address _Ownedby = msg.sender;
-    emit roomCreated(_storeName, _chickenName, _price, _roomNumber, orderRoom, _finish, _date, _Ownedby);
+    emit roomCreated(
+      _storeName,
+      _chickenName,
+      _price,
+      _roomNumber,
+      orderRoom,
+      _finish,
+      _menuState,
+      _date,
+      _Ownedby
+    );
   }
 
-  function matchRoom(
-    uint256 _roomIndex
-  ) public payable {
+  function matchRoom(uint256 _roomIndex) public payable {
     OrderRoom orderRoom = findOrderRoom(_roomIndex);
     orderRoom.matchRoom(msg.sender);
     address(uint160(address(orderRoom))).transfer(msg.value);
 
     emit matchFinish(_roomIndex);
-
   }
 
   // function() external payable {}
 
-  function approveOrder(
-    string memory _storeName,
-    uint256 _roomIndex
-    
-  ) public onlyOwner() {
+  function approveOrder(string memory _storeName, uint256 _roomIndex)
+    public
+    onlyOwner
+  {
     OrderRoom orderRoom = findOrderRoom(_roomIndex);
     orderRoom.approveOrder(_roomIndex, owner());
 
     emit approveFinish(_storeName, _roomIndex);
   }
 
-  function finishCook(
-    uint256 _roomIndex
-  ) public onlyOwner() {
+  function finishCook(uint256 _roomIndex) public onlyOwner {
     OrderRoom orderRoom = findOrderRoom(_roomIndex);
 
     orderRoom.finishCook();
@@ -176,20 +190,8 @@ contract ChickenHouse is Ownable {
   }
 
   // 2.5 원하는 치킨집의 메뉴를 가져온다?
-  function getStoreMenu()
-    public
-    view
-    returns (string[] memory _chickens, uint256[] memory _prices)
-  {
-    string[] memory chickenName = new string[](menus.length);
-    uint256[] memory price = new uint256[](menus.length);
-
-    for (uint256 i = 0; i < menus.length; i++) {
-      chickenName[i] = menus[i].chickenName;
-      price[i] = menus[i].price;
-    }
-
-    return (_chickens = chickenName, _prices = price);
+  function getStoreMenu2() public view returns (Menu[] memory _menus) {
+    return (_menus = menus);
   }
 
   // 2.5 다른방법
@@ -215,21 +217,6 @@ contract ChickenHouse is Ownable {
     menus.push(Menu(_chickenName, _price, _menuState, menus.length - 1));
   }
 
-  // 3. 원하는 주문방의 정보를 가져오기
-  function getRoomInfo(uint256 _roomIndex)
-    public
-    view
-    returns (
-      string memory,
-      uint256,
-      uint8,
-      address
-    )
-  {
-    OrderRoom orderRoom = findOrderRoom(_roomIndex);
-    return orderRoom.getRoomInfo();
-  }
-
   // location 변경 함수
   function changeLocation(string memory _longitude, string memory _latitude)
     public
@@ -246,7 +233,7 @@ contract ChickenHouse is Ownable {
   }
 
   // user1과 user2 에게 환불
-  function refund2(uint256 _roomIndex) onlyOwner() public {
+  function refund2(uint256 _roomIndex) public onlyOwner {
     OrderRoom orderRoom = findOrderRoom(_roomIndex);
     orderRoom.refund2();
     roomCount--;
