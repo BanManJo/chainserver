@@ -218,6 +218,24 @@ contract ChickenHouse is Ownable {
     menus.push(Menu(_chickenName, _price, _menuState, menus.length - 1));
   }
 
+  // 3. 원하는 주문방의 정보를 가져오기
+  function getRoomInfo(uint256 _roomIndex)
+    public
+    view
+    returns (
+      string memory,
+      uint256,
+      uint8,
+      uint8,
+      address,
+      uint256
+
+    )
+  {
+    OrderRoom orderRoom = findOrderRoom(_roomIndex);
+    return orderRoom.getRoomInfo();
+  }
+
   // location 변경 함수
   function changeLocation(string memory _longitude, string memory _latitude)
     public

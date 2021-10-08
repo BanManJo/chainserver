@@ -10,6 +10,7 @@ contract OrderRoom {
   uint256 private finishTime;
   address private user1;
   address private user2;
+  uint256 private receiveTime;
 
   function() external payable {}
 
@@ -35,6 +36,8 @@ contract OrderRoom {
   function matchRoom(address _address) public payable {
     state = 2;
     user2 = _address;
+
+    receiveTime = now;
   }
 
   function approveOrder(uint256 _roomIndex, address _owner) public payable {
@@ -47,7 +50,7 @@ contract OrderRoom {
   }
 
   function getStateRoom() external view returns (uint256 _state) {
-    return _state = state;
+    return (_state = state);
   }
 
   function getRoomInfo()
@@ -60,7 +63,8 @@ contract OrderRoom {
       uint8 _menuState,
       uint256 _startTime,
       uint256 _finishTime,
-      address _user1
+      address _user1,
+      uint256 _receiveTime
     )
   {
     return (
@@ -70,7 +74,8 @@ contract OrderRoom {
       _menuState = menuState,
       _startTime = startTime,
       _finishTime = finishTime,
-      _user1 = user1
+      _user1 = user1,
+      _receiveTime = receiveTime
     );
   }
 
