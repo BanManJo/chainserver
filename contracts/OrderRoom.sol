@@ -50,7 +50,7 @@ contract OrderRoom {
   }
 
   function getStateRoom() external view returns (uint256 _state) {
-    return _state = state;
+    return (_state = state);
   }
 
   function getRoomInfo()
