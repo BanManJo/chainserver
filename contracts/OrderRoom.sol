@@ -15,6 +15,7 @@ contract OrderRoom {
 
   constructor(
     uint256 _price,
+    uint256 _start,
     uint256 _finish,
     string memory _chickenName,
     uint8 _menuState,
@@ -24,8 +25,8 @@ contract OrderRoom {
     chickenName = _chickenName;
     menuState = _menuState;
     state = 1;
-    startTime = now;
-    finishTime = now;
+    startTime = _start;
+    finishTime = _finish;
     user1 = _user1;
   }
 
@@ -57,6 +58,8 @@ contract OrderRoom {
       uint256 _price,
       uint8 _state,
       uint8 _menuState,
+      uint256 _startTime,
+      uint256 _finishTime,
       address _user1
     )
   {
@@ -65,6 +68,8 @@ contract OrderRoom {
       _price = price,
       _state = state,
       _menuState = menuState,
+      _startTime = startTime,
+      _finishTime = finishTime,
       _user1 = user1
     );
   }

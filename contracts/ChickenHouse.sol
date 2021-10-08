@@ -105,9 +105,11 @@ contract ChickenHouse is Ownable {
     uint256 _finish,
     uint8 _menuState
   ) public payable {
+    uint256 _date = block.timestamp;
     // room 생성!!!!
     OrderRoom orderRoom = new OrderRoom(
       _price,
+      _date,
       _finish,
       _chickenName,
       _menuState,
@@ -119,7 +121,6 @@ contract ChickenHouse is Ownable {
     address(uint160(address(orderRoom))).transfer(msg.value);
     roomCount++;
     uint256 _roomNumber = orderRooms.length - 1;
-    uint256 _date = block.timestamp;
     address _Ownedby = msg.sender;
     emit roomCreated(
       _storeName,
@@ -190,7 +191,7 @@ contract ChickenHouse is Ownable {
   }
 
   // 2.5 원하는 치킨집의 메뉴를 가져온다?
-  function getStoreMenu2() public view returns (Menu[] memory _menus) {
+  function getStoreMenu() public view returns (Menu[] memory _menus) {
     return (_menus = menus);
   }
 
