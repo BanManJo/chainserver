@@ -223,7 +223,9 @@ contract ChickenHouse is Ownable {
       string memory,
       uint256,
       uint8,
-      address
+      address,
+      uint256
+
     )
   {
     OrderRoom orderRoom = findOrderRoom(_roomIndex);

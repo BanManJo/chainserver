@@ -9,6 +9,7 @@ contract OrderRoom {
   uint256 private finishTime;
   address private user1;
   address private user2;
+  uint256 private receiveTime;
 
 
   function() external payable {}
@@ -32,6 +33,7 @@ contract OrderRoom {
   function matchRoom(address _address) public payable {
     state = 2;
     user2 = _address;
+    receiveTime = now;
 
   }
 
@@ -58,14 +60,16 @@ contract OrderRoom {
       string memory _chickenName,
       uint256 _price,
       uint8 _state,
-      address _user1
+      address _user1,
+      uint256 _receiveTime
     )
   {
     return (
       _chickenName = chickenName,
       _price = price,
       _state = state,
-      _user1 = user1
+      _user1 = user1,
+      _receiveTime = receiveTime
     );
   }
 
