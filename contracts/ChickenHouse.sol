@@ -225,6 +225,7 @@ contract ChickenHouse is Ownable {
       string memory,
       uint256,
       uint8,
+      uint8,
       address,
       uint256
 

@@ -61,7 +61,7 @@ contract OrderRoom {
       uint256 _price,
       uint8 _state,
       uint8 _menuState,
-      address _user1
+      address _user1,
       uint256 _receiveTime
 
     )
