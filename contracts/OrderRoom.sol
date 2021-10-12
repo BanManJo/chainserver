@@ -40,9 +40,14 @@ contract OrderRoom {
         receiveTime = now;
     }
 
-    function approveOrder(uint256 _roomIndex, address _owner) public payable {
+    function approveOrder(uint256 _roomIndex, address _owner)
+        public
+        payable
+        returns (address, address)
+    {
         address(uint160(address(_owner))).transfer(address(this).balance);
         state = 3;
+        return (user1, user2);
     }
 
     function finishCook() public {

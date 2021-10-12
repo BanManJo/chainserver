@@ -40,7 +40,12 @@ contract ChickenHouse is Ownable {
         address indexed _Ownedby
     );
     event matchFinish(uint256 _roomIndex);
-    event approveFinish(string _chickenName, uint256 _roomIndex);
+    event approveFinish(
+        string _storeName,
+        uint256 _roomIndex,
+        address indexed user1,
+        address indexed user2
+    );
 
     constructor(
         string memory _storeName,
@@ -150,9 +155,12 @@ contract ChickenHouse is Ownable {
         onlyOwner
     {
         OrderRoom orderRoom = findOrderRoom(_roomIndex);
-        orderRoom.approveOrder(_roomIndex, owner());
+        address user1;
+        address user2;
 
-        emit approveFinish(_storeName, _roomIndex);
+        (user1, user2) = orderRoom.approveOrder(_roomIndex, owner());
+
+        emit approveFinish(_storeName, _roomIndex, user1, user2);
     }
 
     function finishCook(uint256 _roomIndex) public onlyOwner {
