@@ -8,6 +8,7 @@ contract Admin {
   ChickenHouse[] chickenHouses;
 
   mapping(string => uint256) storeIndexs;
+  mapping(address => string) storeToOwner;
 
   event registerStore(
     string storeName,
@@ -53,8 +54,6 @@ contract Admin {
     uint256[] memory _prices,
     uint8[] memory _menuState
   ) public {
-    // if (chickenHouses.length == 0) {
-    // require(msg.sender == 0xCA35b7d915458EF540aDe6068dFe2F44E8fa733c);
     ChickenHouse chickenHouse = new ChickenHouse(
       _storeName,
       _latitude,
@@ -63,19 +62,8 @@ contract Admin {
     );
 
     storeIndexs[_storeName] = chickenHouses.push(chickenHouse) - 1;
+    storeToOwner[msg.sender] = _storeName;
     chickenHouse.registerChickenHouse(_chickenNames, _prices, _menuState);
-    // }
-    // else {
-    //   ChickenHouse chickenHouse = new ChickenHouse(
-    //     _storeName,
-    //     _latitude,
-    //     _longitude,
-    //     msg.sender
-    //   );
-
-    //   storeIndexs[_storeName] = chickenHouses.push(chickenHouse) - 1;
-    //   chickenHouse.registerChickenHouse(_chickenNames, _prices, _menuState);
-    // }
 
     emit registerStore(
       _storeName,
@@ -83,5 +71,13 @@ contract Admin {
       _longitude,
       address(chickenHouse)
     );
+  }
+
+  function storeNameOfOwner(address account)
+    public
+    view
+    returns (string memory storeName)
+  {
+    return storeName = storeToOwner[account];
   }
 }
