@@ -97,7 +97,7 @@ contract OrderRoom {
     // user1과 user2 에게 환불
     function refundToBothUsers() public {
         address(uint160(address(user1))).transfer(address(this).balance / 2);
-        address(uint160(address(user2))).transfer(address(this).balance / 2);
+        address(uint160(address(user2))).transfer(address(this).balance);
         state = 4;
     }
 }
