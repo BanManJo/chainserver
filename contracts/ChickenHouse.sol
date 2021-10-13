@@ -39,7 +39,10 @@ contract ChickenHouse is Ownable {
         uint256 _date,
         address indexed _Ownedby
     );
-    event matchFinish(uint256 _roomIndex);
+    event matchFinish(        
+        uint256 _roomIndex,
+        OrderRoom orderRoom,
+        address indexed _matchedby);
     event approveFinish(
         string _storeName,
         uint256 _roomIndex,
@@ -144,8 +147,7 @@ contract ChickenHouse is Ownable {
         OrderRoom orderRoom = findOrderRoom(_roomIndex);
         orderRoom.matchRoom(msg.sender);
         address(uint160(address(orderRoom))).transfer(msg.value);
-
-        emit matchFinish(_roomIndex);
+        emit matchFinish(_roomIndex, orderRoom, msg.sender);
     }
 
     // function() external payable {}
