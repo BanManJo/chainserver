@@ -236,12 +236,6 @@ contract ChickenHouse is Ownable {
         latitude = _latitude;
     }
 
-    // user1이 돈을 넣고 시간이 초과되었을때 환불되는 함수
-    function refundToAUser(uint256 _roomIndex) public {
-        OrderRoom orderRoom = findOrderRoom(_roomIndex);
-        orderRoom.refundToAUser();
-        roomCount--;
-    }
 
     // user1과 user2 에게 환불
     function refundToBothUsers(uint256 _roomIndex) public onlyOwner {
