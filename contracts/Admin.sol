@@ -32,7 +32,12 @@ contract Admin {
     bytes memory tempEmptyStringTest = bytes(_storeName); // Uses memory
     require(tempEmptyStringTest.length != 0);
 
-    ChickenHouse chickenHouse = chickenHouses[storeIndexs[_storeName]];
+    uint256 index = storeIndexs[_storeName] - 1;
+    if (index == uint256(-1)) {
+      return ChickenHouse(0);
+    }
+    ChickenHouse chickenHouse = chickenHouses[index];
+    // ChickenHouse chickenHouse = chickenHouses[storeIndexs[_storeName]];
     return chickenHouse;
   }
 
@@ -61,7 +66,7 @@ contract Admin {
       msg.sender
     );
 
-    storeIndexs[_storeName] = chickenHouses.push(chickenHouse) - 1;
+    storeIndexs[_storeName] = chickenHouses.push(chickenHouse);
     storeToOwner[msg.sender] = _storeName;
     chickenHouse.registerChickenHouse(_chickenNames, _prices, _menuState);
 

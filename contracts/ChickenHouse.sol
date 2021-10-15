@@ -13,12 +13,6 @@ contract ChickenHouse is Ownable {
   string longitude;
   Menu[] menus;
 
-  enum FreshJuiceSize {
-    SUNSAL,
-    BBUE,
-    LARGE
-  }
-
   struct Menu {
     string chickenName;
     uint256 price;
@@ -199,11 +193,6 @@ contract ChickenHouse is Ownable {
   function getStoreMenu() public view returns (Menu[] memory _menus) {
     return (_menus = menus);
   }
-
-  // 2.5 다른방법
-  // function getStoreMenu2(uint256 _storeIndex) public view returns(Menu[] memory){
-  //   return menus;
-  // }
 
   // onOff 변경 함수
   function changeOnOff() public {
