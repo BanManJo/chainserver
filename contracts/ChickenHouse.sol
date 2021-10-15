@@ -209,7 +209,7 @@ contract ChickenHouse is Ownable {
     uint256 _price,
     uint8 _menuState
   ) public {
-    menus.push(Menu(_chickenName, _price, _menuState, menus.length - 1));
+    menus.push(Menu(_chickenName, _price, _menuState, menus.length));
   }
 
   // location 변경 함수
