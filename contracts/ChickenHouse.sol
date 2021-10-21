@@ -38,8 +38,8 @@ contract ChickenHouse is Ownable {
     address indexed _matchedby,
     string _storeName
   );
-  event roomApproved(string _storeName, uint256 _roomIndex);
-  event roomRejected(string _storeName, uint256 _roomIndex);
+  event roomApproved(string _storeName, uint256 _roomIndex, uint8 _state);
+  event roomRejected(string _storeName, uint256 _roomIndex, uint8 _state);
 
   constructor(
     string memory _storeName,
@@ -151,7 +151,7 @@ contract ChickenHouse is Ownable {
 
     orderRoom.approveOrder(_roomIndex, owner());
 
-    emit roomApproved(_storeName, _roomIndex);
+    emit roomApproved(_storeName, _roomIndex, 3);
   }
 
   function finishCook(uint256 _roomIndex) public onlyOwner {
@@ -224,6 +224,6 @@ contract ChickenHouse is Ownable {
   function refundToBothUsers(uint256 _roomIndex) public onlyOwner {
     OrderRoom orderRoom = findOrderRoom(_roomIndex);
     orderRoom.refundToBothUsers();
-    emit roomRejected(storeName, _roomIndex);
+    emit roomRejected(storeName, _roomIndex, 4);
   }
 }
