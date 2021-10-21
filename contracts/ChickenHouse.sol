@@ -40,7 +40,7 @@ contract ChickenHouse is Ownable {
   );
   event roomApproved(string _storeName, uint256 _roomIndex);
   event roomRejected(string _storeName, uint256 _roomIndex);
-
+  event onOffAlert(string _storeName, uint8 onOff);
   constructor(
     string memory _storeName,
     string memory _latitude,
@@ -201,6 +201,7 @@ contract ChickenHouse is Ownable {
     } else if (onOff == 1) {
       onOff = 0;
     }
+    emit onOffAlert(storeName, onOff);
   }
 
   // 하나의 메뉴를 추가하는 함수
