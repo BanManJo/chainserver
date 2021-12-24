@@ -44,4 +44,7 @@ package-lock.json
 .history
 .ionide
 
+## Keys
+.secret
+.infurakey
 # End of https://www.toptal.com/developers/gitignore/api/soliditytruffle,visualstudiocode
